@@ -1,0 +1,24 @@
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: rgb(255, 255, 255);
+  overflow-x: hidden;
+  align-items: center;
+  justify-content: center;
+}
+.cover {
+  width: 100vw;
+  height: 100vh;
+  background-image: url('../images/cover.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}

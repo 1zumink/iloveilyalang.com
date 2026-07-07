@@ -1,25 +1,145 @@
 * {
   box-sizing: border-box;
 }
+:root {
+  --accent: #ec1e93;
+  --ink: #0a0a0a;
+}
 html {
-  scroll-behavior: smooth;
+  height: 100%;
 }
 body {
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
   position: relative;
-  background-color: rgb(255, 255, 255);
+  width: 100vw;
+  min-height: 100vh;
   overflow-x: hidden;
-  align-items: center;
-  justify-content: center;
-}
-.cover {
-  width: 99vw;
-  height: 99vh;
-  background-image: url('../images/cover.png');
-  background-size: contain;
+  background: #fff;
+  font-family: 'Styrene A';
+  color: var(--ink);
+
+  /* --- ОТЛАДОЧНАЯ ПОДЛОЖКА (bgRegulate.png), растянута на 100vw.
+     Закомментируй блок ниже, когда сверка не нужна. --- */
+  /* background-image: url('../images/bgRegulate.png');
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: top left;
+  background-size: 100vw auto; */
+}
+
+/* Все размеры и координаты — в vw относительно макета 1440
+   (1px макета = 100/1440 vw ≈ 0.06944vw), поэтому экран масштабируется
+   на любую ширину пропорционально подложке. */
+
+/* Меню — Regular */
+#burger {
+  display: none;
+}
+.mainMenu a {
+  position: absolute;
+  top: 1.319vw;
+  font-weight: 400;
+  font-size: 1.667vw;
+  line-height: 1;
+  color: var(--ink);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.mainMenu a:nth-child(1) {
+  left: 5.139vw;
+}
+.mainMenu a:nth-child(2) {
+  left: 26.042vw;
+}
+.mainMenu a:nth-child(3) {
+  left: 44.375vw;
+}
+.mainMenu a:nth-child(4) {
+  left: 64.722vw;
+}
+.mainMenu a:nth-child(5) {
+  left: 81.806vw;
+}
+.mainMenu a:hover {
+  color: var(--accent);
+}
+
+/* Герой занимает фиксированную высоту (≈ низ подзаголовка),
+   чтобы блоки ниже вставали в нормальном потоке. */
+.hero {
+  position: relative;
+  height: 47vw;
+}
+
+/* Заголовок */
+.hero__line {
+  position: absolute;
+  display: block;
+  font-weight: 500; /* Medium */
+  line-height: 1;
+  letter-spacing: 0.012em;
+  white-space: nowrap;
+}
+/* Чёрные строки — кегль 137px (9.514vw) */
+.hero__line--1 {
+  top: 6.597vw;
+  left: 22.361vw;
+  font-size: 9.514vw;
+}
+.hero__line--2 {
+  top: 17.639vw;
+  left: 4.097vw;
+  font-size: 9.514vw;
+}
+/* Имя — обычный Styrene, кегль 178px (12.361vw), капитель 126px.
+   Строка идёт во всю ширину и заканчивается под правым краем фото. */
+.hero__line--3 {
+  top: 28.056vw;
+  left: 22.083vw;
+  font-size: 12.6vw;
+  color: var(--accent);
+}
+
+/* Подзаголовок — Regular, кегль 31px (2.153vw), интерлиньяж 41px (2.847vw) */
+.hero__subtitle {
+  position: absolute;
+  top: 41.389vw;
+  left: 5.139vw;
+  font-weight: 400;
+  font-size: 2.153vw;
+  line-height: 2.847vw;
+  letter-spacing: 0.02em;
+}
+.accent {
+  color: var(--accent);
+}
+
+/* Блок «Обо мне» — в потоке, на 300px ниже героя (20.833vw), по центру */
+.about {
+  padding: 20.833vw 5.139vw 8vw;
+  text-align: center;
+}
+.about__title {
+  font-weight: 500; /* как чёрные строки героя */
+  font-size: 9.514vw;
+  line-height: 1;
+  letter-spacing: 0.012em;
+  color: var(--ink);
+  margin-bottom: 2.2vw;
+}
+.about__text {
+  max-width: 58vw;
+  margin: 0 auto 1.4vw;
+  font-weight: 400;
+  font-size: 1.5vw;
+  line-height: 1.5;
+}
+
+/* Фото: квадрат 291×291, справа 73, верх 121 (по первой строке) */
+.hero__photo {
+  position: absolute;
+  top: 8.403vw;
+  right: 5.069vw;
+  width: 20.208vw;
+  height: 20.208vw;
+  object-fit: cover;
+  border-radius: 1.667vw;
 }

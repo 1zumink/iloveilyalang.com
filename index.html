@@ -3,10 +3,66 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>I love Ilya Lang</title>
-    <link rel="stylesheet" href="./stylesheets/style.css" />
+    <title>Спарк — Главная</title>
+    <link rel="stylesheet" href="stylesheets/style.css" />
+    <script defer src="javascripts/scripts.js"></script>
+    <link rel="icon" href="images/iconSite.png" type="images/png" />
+
+    <meta property="og:type" content="web-site" />
+    <meta property="og:title" content="СПАРК" />
+    <meta property="og:description" content="Приложение ивент-менеджер СПАРК" />
+    <meta
+      property="og:Image"
+      content="https://raw.githubusercontent.com/1zumink/Ilya_Lang_4_Module/refs/heads/main/images/%D0%90%D0%BF%2020.jpg"
+    />
+    <meta
+      property="og:url"
+      content="https://1zumink.github.io/Ilya_Lang_4_Module/"
+    />
   </head>
   <body>
-    <div class="cover"></div>
+    <header class="header">
+      <div id="burger"><span></span><span></span><span></span></div>
+
+      <nav class="mainMenu">
+        <a href="#about" class="active">Обо мне</a>
+        <a href="#cases">Кейсы</a>
+        <a href="#resume">Резюме</a>
+        <a href="#prices">Цены</a>
+        <a href="#contacts">Контакты</a>
+      </nav>
+    </header>
+
+    <main class="hero">
+      <span class="hero__line hero__line--1">Привет!</span>
+      <span class="hero__line hero__line--2">Меня зовут</span>
+      <span class="hero__line hero__line--3">Илья Ланг</span>
+      <p class="hero__subtitle">
+        Я – <span class="accent">мультидисциплинарный</span> дизайнер,<br />
+        с уклоном в <span class="accent">веб</span> и
+        <span class="accent">интерфейсы</span>
+      </p>
+
+      <img class="hero__photo" src="images/myPhoto1.png" alt="Илья Ланг" />
+    </main>
+
+    <section class="about" id="about">
+      <h2 class="about__title">Обо мне</h2>
+      <p class="about__text">
+        Я — веб-дизайнер. Проектирую сайты и интерфейсы, которые не только
+        аккуратно выглядят, но и удобно работают: от первой идеи и прототипа до
+        финального макета выстраиваю логику, типографику и композицию так, чтобы
+        продукт решал задачу бизнеса и оставался понятным пользователю.
+      </p>
+      <p class="about__text">
+        Работаю на стыке дизайна и вёрстки — разбираюсь в UX/UI, дизайн-системах
+        и адаптивных сетках, а готовые макеты довожу до чистого, живого кода.
+        Люблю минимализм, сильную типографику и внимание к деталям.
+      </p>
+      <p class="about__text">
+        Открыт к новым проектам — от лендингов до многостраничных сайтов и
+        веб-приложений. <span class="accent">Давайте сделаем что-то классное.</span>
+      </p>
+    </section>
   </body>
 </html>

@@ -1,2 +1,277 @@
-@media screen and (max-width: 600px) {
+/* ===================== МОБИЛЬНАЯ ВЕРСИЯ ===================== */
+@media screen and (max-width: 700px) {
+  /* --- Бургер и выезжающее меню --- */
+  #burger {
+    display: block;
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    z-index: 60;
+    width: 44px;
+    height: 44px;
+    padding: 10px 9px;
+    border-radius: 12px;
+    background: #fff;
+    cursor: pointer;
+  }
+  #burger span {
+    display: block;
+    width: 26px;
+    height: 3px;
+    margin: 4.5px auto;
+    border-radius: 2px;
+    background: var(--ink);
+    transition: transform 0.3s, opacity 0.3s;
+  }
+  body.menu-open #burger span:nth-child(1) {
+    transform: translateY(7.5px) rotate(45deg);
+  }
+  body.menu-open #burger span:nth-child(2) {
+    opacity: 0;
+  }
+  body.menu-open #burger span:nth-child(3) {
+    transform: translateY(-7.5px) rotate(-45deg);
+  }
+
+  .header {
+    position: static;
+  }
+  .mainMenu {
+    position: fixed;
+    top: 0;
+    right: -80vw;
+    width: 72vw;
+    height: 100vh;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    padding: 92px 28px;
+    background: #fff;
+    box-shadow: -8px 0 40px rgba(0, 0, 0, 0.12);
+    transition: right 0.35s ease;
+  }
+  body.menu-open .mainMenu {
+    right: 0;
+  }
+  /* затемнение под панелью */
+  body.menu-open::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background: rgba(0, 0, 0, 0.35);
+  }
+  .mainMenu a {
+    position: static; /* сбрасываем десктопные left */
+    font-size: 20px;
+  }
+
+  /* --- Герой: обычный поток вместо пиксельной раскладки --- */
+  .hero {
+    height: auto;
+    padding: 76px 20px 8px;
+  }
+  .hero__line {
+    position: static;
+    display: block;
+    font-size: 15.5vw;
+    letter-spacing: 0;
+    white-space: normal;
+  }
+  .hero__line--3 {
+    font-size: 17vw;
+  }
+  .hero__subtitle {
+    position: static;
+    margin-top: 20px;
+    font-size: 5.2vw;
+    line-height: 1.35;
+  }
+  .hero__photo {
+    position: static;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    margin-top: 24px;
+    border-radius: 16px;
+  }
+
+  /* --- Общие секции --- */
+  section {
+    scroll-margin-top: 16px;
+  }
+  .about {
+    padding: 72px 20px 8px;
+  }
+  .about__title,
+  .section__title {
+    font-size: 15vw;
+    margin-bottom: 24px;
+  }
+  .about__text {
+    max-width: 100%;
+    font-size: 4.4vw;
+    margin-bottom: 14px;
+  }
+  .method,
+  .cases,
+  .prices,
+  .resume,
+  .contacts {
+    padding: 56px 20px 8px;
+  }
+
+  /* --- Методика: в столбик --- */
+  .method__list {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+  .method__num {
+    font-size: 9vw;
+    margin-bottom: 4px;
+  }
+  .method__name {
+    font-size: 5.4vw;
+    margin-bottom: 4px;
+  }
+  .method__text {
+    font-size: 4.2vw;
+  }
+
+  /* --- Кейсы: карточки по две в ряд --- */
+  .cases__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 14px;
+    max-width: 100%;
+  }
+  .caseCard__cover {
+    border-radius: 12px;
+  }
+  .caseCard__tag {
+    margin-top: 10px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 2.6vw;
+  }
+  .caseCard__title {
+    margin-top: 6px;
+    font-size: 4.6vw;
+  }
+  .caseCard__desc {
+    margin-top: 4px;
+    font-size: 3.2vw;
+  }
+
+  /* --- Цены --- */
+  .prices__intro {
+    font-size: 4.4vw;
+    margin-bottom: 20px;
+  }
+  .prices__grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .price {
+    border-width: 1px;
+    border-radius: 14px;
+    padding: 20px 18px;
+  }
+  .price__name {
+    font-size: 5vw;
+    margin-bottom: 8px;
+  }
+  .price__value {
+    font-size: 7.5vw;
+    margin-bottom: 8px;
+  }
+  .price__desc {
+    font-size: 4vw;
+  }
+  .prices__note {
+    margin-top: 20px;
+    font-size: 4.2vw;
+  }
+
+  /* --- Резюме и контакты --- */
+  .resume__text,
+  .contacts__text {
+    font-size: 5.2vw;
+    margin-bottom: 20px;
+  }
+  .resume__actions,
+  .contacts__actions {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .btn {
+    padding: 12px 24px;
+    border-radius: 26px;
+    font-size: 4.4vw;
+  }
+  .btn--ghost {
+    box-shadow: inset 0 0 0 1.5px var(--ink);
+  }
+
+  .footer {
+    padding: 40px 20px 20px;
+    font-size: 3.4vw;
+  }
+
+  /* --- Страница кейса --- */
+  .caseDetail {
+    padding: 76px 20px 8px;
+  }
+  .caseDetail__back {
+    margin-bottom: 18px;
+    font-size: 4.2vw;
+  }
+  .caseDetail__title {
+    margin-top: 10px;
+    font-size: 11.5vw;
+  }
+  .caseDetail__subtitle {
+    margin-top: 8px;
+    font-size: 5vw;
+  }
+  .caseDetail__meta {
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 14px;
+    font-size: 4vw;
+  }
+  .caseDetail__star {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    margin-top: 28px;
+  }
+  .case__label {
+    font-size: 3.4vw;
+    margin-bottom: 6px;
+  }
+  .caseDetail__block p {
+    font-size: 4.3vw;
+  }
+  .caseDetail__imgs {
+    margin-top: 32px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .caseDetail__imgs img {
+    border-radius: 8px;
+  }
+  .caseDetail__cols {
+    columns: 2;
+    column-gap: 10px;
+  }
+  .caseDetail__cols img {
+    margin-bottom: 10px;
+  }
+  .caseDetail__next {
+    margin-top: 44px;
+  }
+  .caseDetail__cta {
+    font-size: 5.2vw;
+    margin-bottom: 16px;
+  }
 }

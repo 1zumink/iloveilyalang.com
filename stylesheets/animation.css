@@ -1,20 +1,24 @@
-/* Плавная смена темы (розовый фон / белый текст) на блоке «Обо мне».
-   Класс .theme-pink навешивается на <body> из scripts.js по скроллу. */
+/* ===================== СМЕНА ТЕМЫ ПО СКРОЛЛУ =====================
+   Классы .theme-pink / .theme-dark вешаются на <body> из scripts.js,
+   когда секция с data-theme="pink|dark" доходит до центра экрана. */
 body {
   transition: background-color 0.6s ease, color 0.6s ease;
 }
 .accent,
 .about__title,
-.hero__line {
+.section__title,
+.hero__line,
+.cv__role,
+.cv__heading,
+.btn--ghost {
   transition: color 0.6s ease;
 }
 
-/* Активная тема */
+/* Розовая тема — блок «Обо мне» */
 body.theme-pink {
   background-color: var(--accent);
   color: #fff;
 }
-/* Элементы с собственным цветом переводим в белый, иначе сливаются с фоном */
 body.theme-pink .about__title {
   color: #fff;
 }
@@ -22,4 +26,319 @@ body.theme-pink .about__title {
 body.theme-pink .accent,
 body.theme-pink .hero__line--3 {
   color: var(--ink);
+}
+
+/* Тёмная тема — блок «Контакты» */
+body.theme-dark {
+  background-color: var(--ink);
+  color: #fff;
+}
+body.theme-dark .section__title,
+body.theme-dark .about__title,
+body.theme-dark .cv__role,
+body.theme-dark .cv__heading,
+body.theme-dark .caseCard {
+  color: #fff;
+}
+body.theme-dark .caseCard__desc {
+  color: #b5b5b5;
+}
+body.theme-dark .btn--ghost {
+  color: #fff;
+  box-shadow: inset 0 0 0 0.15vw #fff;
+}
+body.theme-dark .price {
+  border-color: #3a3a3a;
+}
+body.theme-dark .price__desc,
+body.theme-dark .cv__desc,
+body.theme-dark .method__text {
+  color: #b5b5b5;
+}
+body.theme-dark .cv__item {
+  border-color: #3a3a3a;
+}
+body.theme-dark .cv__chip {
+  box-shadow: inset 0 0 0 0.14vw #3a3a3a;
+  color: #fff;
+}
+body.theme-dark .cv__chip:hover {
+  box-shadow: inset 0 0 0 0.14vw var(--accent);
+}
+
+/* ===================== ПРОГРЕСС СКРОЛЛА =====================
+   Вертикальная полоска у правого края; высоту (scaleY)
+   обновляет scripts.js. */
+.scrollProgress {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 70;
+  width: 0.28vw;
+  height: 100vh;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: top;
+  pointer-events: none;
+  transition: background-color 0.6s ease;
+}
+/* на розовой теме акцентная полоска сливается с фоном — делаем чёрной */
+body.theme-pink .scrollProgress {
+  background: var(--ink);
+}
+
+/* Топпер: фон и пункты меню подстраиваются под тему страницы */
+.header {
+  transition: background-color 0.6s ease;
+}
+body.theme-pink .header {
+  background: rgba(255, 34, 152, 0.82);
+}
+body.theme-dark .header {
+  background: rgba(18, 18, 18, 0.82);
+}
+body.theme-pink .mainMenu a,
+body.theme-dark .mainMenu a {
+  color: #fff;
+}
+/* на розовом фоне акцент не читается — активный/ховер пункт чёрный */
+body.theme-pink .mainMenu a.active,
+body.theme-pink .mainMenu a:hover {
+  color: var(--ink);
+}
+body.theme-pink .mainMenu a::after {
+  background: var(--ink);
+}
+
+/* ===================== ПОЯВЛЕНИЕ ХИРО ПРИ ЗАГРУЗКЕ ===================== */
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    transform: translateY(3vw);
+  }
+}
+@keyframes heroFade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes heroPhoto {
+  from {
+    opacity: 0;
+    transform: translateY(2vw) scale(0.92);
+  }
+}
+/* backwards: до старта элемент держится в from-состоянии,
+   после конца анимация «отпускает» элемент (нужно для JS-параллакса) */
+.hero__line--1 {
+  animation: heroRise 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) 0.1s backwards;
+}
+.hero__line--2 {
+  animation: heroRise 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) 0.25s backwards;
+}
+.hero__line--3 {
+  animation: heroRise 0.9s cubic-bezier(0.22, 0.61, 0.36, 1) 0.4s backwards;
+}
+.hero__subtitle {
+  animation: heroFade 0.9s ease 0.75s backwards;
+}
+.hero__photo {
+  animation: heroPhoto 1s cubic-bezier(0.22, 0.61, 0.36, 1) 0.55s backwards;
+}
+.mainMenu a {
+  animation: heroFade 0.6s ease backwards;
+}
+.mainMenu a:nth-child(1) { animation-delay: 0.15s; }
+.mainMenu a:nth-child(2) { animation-delay: 0.25s; }
+.mainMenu a:nth-child(3) { animation-delay: 0.35s; }
+.mainMenu a:nth-child(4) { animation-delay: 0.45s; }
+.mainMenu a:nth-child(5) { animation-delay: 0.55s; }
+
+/* ===================== МЕНЮ: подчёркивание и активный пункт ===================== */
+.mainMenu a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -0.35vw;
+  width: 100%;
+  height: 0.15vw;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+.mainMenu a:hover::after,
+.mainMenu a.active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+.mainMenu a.active {
+  color: var(--accent);
+}
+
+/* ===================== ПОЯВЛЕНИЕ ПО СКРОЛЛУ =====================
+   Класс .js-reveal вешает scripts.js, стаггер — через --reveal-delay.
+   После конца анимации JS ставит .reveal-done, чтобы transform
+   освободился для ховеров (наклон карточек и т.п.). */
+.js-reveal {
+  opacity: 0;
+}
+.js-reveal.is-visible {
+  animation: revealUp 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+.js-reveal.reveal-done {
+  animation: none;
+  opacity: 1;
+}
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(2.4vw);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ===================== ХОВЕРЫ ===================== */
+/* Кнопки: магнитятся к курсору из JS, transition сглаживает движение */
+.btn {
+  will-change: transform;
+  transition: opacity 0.2s, transform 0.3s cubic-bezier(0.33, 1.4, 0.5, 1),
+    box-shadow 0.3s ease;
+}
+.btn:hover {
+  box-shadow: 0 0.7vw 2vw rgba(255, 34, 152, 0.3);
+}
+.btn--ghost:hover {
+  box-shadow: inset 0 0 0 0.15vw var(--ink), 0 0.7vw 2vw rgba(0, 0, 0, 0.12);
+}
+body.theme-dark .btn--ghost:hover {
+  box-shadow: inset 0 0 0 0.15vw #fff, 0 0.7vw 2vw rgba(0, 0, 0, 0.4);
+}
+
+/* Карточки кейсов и цен: 3D-наклон из JS + тень */
+.caseCard,
+.price {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  will-change: transform;
+}
+.caseCard:hover,
+.price:hover {
+  box-shadow: 0 1.2vw 3vw rgba(0, 0, 0, 0.12);
+}
+.caseCard {
+  border-radius: 1.2vw;
+}
+.price:hover {
+  border-color: var(--accent);
+}
+
+/* Шаги методики: номер подпрыгивает, текст темнеет */
+.method__num {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.33, 1.6, 0.5, 1);
+}
+.method__step:hover .method__num {
+  transform: translateY(-0.35vw) scale(1.12);
+}
+.method__text {
+  transition: color 0.3s ease;
+}
+.method__step:hover .method__text {
+  color: var(--ink);
+}
+body.theme-dark .method__step:hover .method__text {
+  color: #fff;
+}
+
+/* Фото в хиро: лёгкое приближение */
+.hero__photo {
+  transition: box-shadow 0.35s ease;
+}
+.hero__photo:hover {
+  box-shadow: 0 1.5vw 4vw rgba(0, 0, 0, 0.18);
+}
+
+/* ===================== 3D-МЕНЮ КЕЙСОВ =====================
+   Подписи и кнопка прячутся, пока сферу крутят (.inactive),
+   и выплывают на место, когда вращение остановилось (.active).
+   Классы вешает infiniteMenu.js. */
+.casesMenu__title,
+.casesMenu__desc,
+.casesMenu__btn {
+  opacity: 0;
+}
+.casesMenu__title {
+  transform: translate(-1.5vw, -50%);
+}
+.casesMenu__title.active {
+  opacity: 1;
+  transform: translate(0, -50%);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.casesMenu__title.inactive {
+  opacity: 0;
+  transform: translate(-1.5vw, -50%);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.casesMenu__desc {
+  transform: translate(1.5vw, -50%);
+}
+.casesMenu__desc.active {
+  opacity: 1;
+  transform: translate(0, -50%);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.casesMenu__desc.inactive {
+  opacity: 0;
+  transform: translate(1.5vw, -50%);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.casesMenu__btn {
+  transform: translateX(-50%) scale(0);
+}
+.casesMenu__btn.active {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.33, 1.4, 0.5, 1),
+    background 0.25s ease, box-shadow 0.25s ease;
+}
+.casesMenu__btn.inactive {
+  opacity: 0;
+  transform: translateX(-50%) scale(0);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.casesMenu__btn.active:hover {
+  transform: translateX(-50%) scale(1.1);
+  box-shadow: 0 0.7vw 2vw rgba(255, 34, 152, 0.45);
+}
+.casesMenu__hint {
+  transition: opacity 0.5s ease;
+}
+.casesMenu__hint.hidden {
+  opacity: 0;
+}
+.casesMenu__fs {
+  transition: background 0.25s ease, transform 0.25s ease;
+}
+.casesMenu__fs:hover {
+  background: rgba(255, 255, 255, 0.28);
+  transform: scale(1.1);
+}
+
+/* ===================== ДОСТУПНОСТЬ =====================
+   Пользователь просил меньше движения — отключаем всё разом. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .js-reveal {
+    opacity: 1;
+  }
 }

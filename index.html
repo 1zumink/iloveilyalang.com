@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Спарк — Главная</title>
     <link rel="stylesheet" href="stylesheets/style.css" />
+    <script defer src="javascripts/vendor/gl-matrix-min.js"></script>
     <script defer src="javascripts/scripts.js"></script>
+    <script defer src="javascripts/infiniteMenu.js"></script>
     <link rel="icon" href="images/iconSite.png" type="images/png" />
 
     <meta property="og:type" content="web-site" />
@@ -107,6 +109,32 @@
     <!-- ===================== КЕЙСЫ ===================== -->
     <section class="cases" id="cases">
       <h2 class="section__title">Кейсы</h2>
+
+      <!-- 3D-меню кейсов: крутящаяся сфера из обложек (javascripts/infiniteMenu.js).
+           Если WebGL2 недоступен или включён prefers-reduced-motion,
+           остаётся обычная сетка карточек ниже. -->
+      <div class="casesMenu">
+        <canvas id="casesMenuCanvas"></canvas>
+        <h3 class="casesMenu__title"></h3>
+        <p class="casesMenu__desc"></p>
+        <a class="casesMenu__btn" href="#" aria-label="Открыть кейс">&#x2197;</a>
+        <button class="casesMenu__fs" type="button" aria-label="На весь экран">
+          <svg class="casesMenu__fs-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3" />
+            <path d="M16 3h3a2 2 0 0 1 2 2v3" />
+            <path d="M8 21H5a2 2 0 0 1-2-2v-3" />
+            <path d="M16 21h3a2 2 0 0 0 2-2v-3" />
+          </svg>
+          <svg class="casesMenu__fs-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M8 3v3a2 2 0 0 1-2 2H3" />
+            <path d="M16 3v3a2 2 0 0 0 2 2h3" />
+            <path d="M8 21v-3a2 2 0 0 0-2-2H3" />
+            <path d="M16 21v-3a2 2 0 0 1 2-2h3" />
+          </svg>
+        </button>
+        <p class="casesMenu__hint">Крути сферу и открывай кейс кнопкой</p>
+      </div>
+
       <div class="cases__grid">
         <a class="caseCard" href="case-spark-identity.html">
           <img class="caseCard__cover" src="images/cases/merch_cover.jpg" alt="СПАРК — айдентика" loading="lazy" />

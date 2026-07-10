@@ -8,9 +8,16 @@
 html {
   height: 100%;
   scroll-behavior: smooth; /* плавные якорные переходы из меню */
+  /* системная полоса прокрутки скрыта — её роль играет
+     индикатор .scrollProgress у правого края */
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar {
+  display: none;
+  width: 0;
 }
 section {
-  scroll-margin-top: 3vw; /* отступ при прыжке по якорю */
+  scroll-margin-top: 6.5vw; /* отступ при прыжке по якорю — с запасом под фиксированный топпер */
 }
 body {
   position: relative;
@@ -32,6 +39,22 @@ body {
 /* Все размеры и координаты — в vw относительно макета 1440
    (1px макета = 100/1440 vw ≈ 0.06944vw), поэтому экран масштабируется
    на любую ширину пропорционально подложке. */
+
+/* Топпер: фиксированная шапка, едет вместе со скроллом.
+   Пункты меню — якорные ссылки (#about, #cases, ...), плавный переход
+   даёт scroll-behavior: smooth на html. Фон полупрозрачный с блюром,
+   цвет подстраивается под тему в animation.css. */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 4.306vw; /* 62px макета */
+  z-index: 60;
+  background: rgba(255, 255, 255, 0.82);
+  -webkit-backdrop-filter: blur(0.8vw);
+  backdrop-filter: blur(0.8vw);
+}
 
 /* Меню — Regular */
 #burger {
@@ -262,6 +285,118 @@ body {
   color: #444;
 }
 
+/* ===================== КЕЙСЫ: 3D-меню-сфера =====================
+   Блок включается классом .cases--menu на секции (ставит
+   infiniteMenu.js после успешного старта WebGL); без него
+   показывается обычная сетка .cases__grid. */
+.casesMenu {
+  display: none;
+  position: relative;
+  height: 40vw;
+}
+.cases--menu .casesMenu {
+  display: block;
+}
+.cases--menu .cases__grid {
+  display: none;
+}
+#casesMenuCanvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 1.667vw;
+  background: var(--ink);
+  cursor: grab;
+  outline: none;
+}
+#casesMenuCanvas:active {
+  cursor: grabbing;
+}
+.casesMenu__title {
+  position: absolute;
+  left: 3.5vw;
+  top: 50%;
+  max-width: 22vw;
+  color: #fff;
+  font-weight: 500;
+  font-size: 3vw;
+  line-height: 1.1;
+  pointer-events: none;
+}
+.casesMenu__desc {
+  position: absolute;
+  right: 3.5vw;
+  top: 50%;
+  max-width: 17vw;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 1.15vw;
+  line-height: 1.5;
+  text-align: right;
+  pointer-events: none;
+}
+.casesMenu__btn {
+  position: absolute;
+  left: 50%;
+  bottom: 2.6vw;
+  width: 4.4vw;
+  height: 4.4vw;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 1.9vw;
+  text-decoration: none;
+}
+.casesMenu__hint {
+  position: absolute;
+  top: 1.8vw;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1vw;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* Кнопка полноэкранного режима — нижний правый угол панели.
+   Скрывается из JS, если Fullscreen API недоступен (iPhone). */
+.casesMenu__fs {
+  position: absolute;
+  right: 1.4vw;
+  bottom: 1.4vw;
+  width: 3vw;
+  height: 3vw;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+  cursor: pointer;
+}
+.casesMenu__fs svg {
+  width: 1.4vw;
+  height: 1.4vw;
+}
+.casesMenu__fs-close {
+  display: none;
+}
+/* Класс .casesMenu--fs ставит infiniteMenu.js по fullscreenchange */
+.casesMenu--fs {
+  height: 100%;
+}
+.casesMenu--fs #casesMenuCanvas {
+  border-radius: 0;
+}
+.casesMenu--fs .casesMenu__fs-open {
+  display: none;
+}
+.casesMenu--fs .casesMenu__fs-close {
+  display: block;
+}
+
 /* ===================== СТРАНИЦА КЕЙСА ===================== */
 .caseDetail {
   padding: 8vw 5.139vw 4vw;
@@ -405,6 +540,104 @@ body {
 .resume,
 .contacts {
   text-align: center;
+}
+
+/* --- Визуальное CV: две колонки-таймлайна (опыт / образование) --- */
+.cv {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4vw;
+  max-width: 72vw;
+  margin: 0 auto 3.5vw;
+  text-align: left;
+}
+.cv__heading {
+  font-weight: 500;
+  font-size: 2.2vw;
+  margin-bottom: 1.8vw;
+}
+.cv__list {
+  list-style: none;
+  padding: 0;
+}
+.cv__item {
+  position: relative;
+  padding: 0 0 2vw 2.2vw;
+  border-left: 0.14vw solid #e3e3e3;
+  transition: border-color 0.3s ease;
+}
+.cv__item:last-child {
+  padding-bottom: 0.5vw;
+}
+/* точка на линии таймлайна */
+.cv__item::before {
+  content: '';
+  position: absolute;
+  left: -0.45vw;
+  top: 0.2vw;
+  width: 0.76vw;
+  height: 0.76vw;
+  border-radius: 50%;
+  background: var(--accent);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.cv__item:hover {
+  border-color: var(--accent);
+}
+.cv__item:hover::before {
+  transform: scale(1.45);
+  box-shadow: 0 0 0 0.4vw rgba(255, 34, 152, 0.18);
+}
+.cv__period {
+  display: block;
+  font-weight: 500;
+  font-size: 0.95vw;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.cv__role {
+  margin-top: 0.5vw;
+  font-weight: 500;
+  font-size: 1.55vw;
+  line-height: 1.15;
+}
+.cv__place {
+  margin-top: 0.3vw;
+  font-size: 1.1vw;
+  color: #888;
+}
+.cv__desc {
+  margin-top: 0.5vw;
+  font-size: 1.1vw;
+  line-height: 1.5;
+  color: #444;
+}
+
+/* --- Чипы навыков --- */
+.cv__skills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.9vw;
+  max-width: 60vw;
+  margin: 0 auto 3.5vw;
+}
+.cv__chip {
+  padding: 0.55vw 1.3vw;
+  border-radius: 2vw;
+  box-shadow: inset 0 0 0 0.14vw #e3e3e3;
+  font-weight: 500;
+  font-size: 1vw;
+  cursor: default;
+  transition: background 0.25s ease, color 0.25s ease,
+    box-shadow 0.25s ease, transform 0.25s ease;
+}
+.cv__chip:hover {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: inset 0 0 0 0.14vw var(--accent);
+  transform: translateY(-0.25vw);
 }
 .resume__text,
 .contacts__text {

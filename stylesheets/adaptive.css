@@ -1,40 +1,48 @@
-/* ===================== МОБИЛЬНАЯ ВЕРСИЯ ===================== */
+/* ===================== МОБИЛЬНАЯ ВЕРСИЯ =====================
+   Все размеры — в vw относительно макета 375
+   (1px макета = 100/375 vw ≈ 0.2667vw), чтобы экран
+   масштабировался пропорционально на любой ширине. */
 @media screen and (max-width: 700px) {
   /* --- Бургер и выезжающее меню --- */
   #burger {
     display: block;
     position: fixed;
-    top: 14px;
-    right: 14px;
+    top: 3.733vw;
+    right: 3.733vw;
     z-index: 60;
-    width: 44px;
-    height: 44px;
-    padding: 10px 9px;
-    border-radius: 12px;
+    width: 11.733vw;
+    height: 11.733vw;
+    padding: 2.667vw 2.4vw;
+    border-radius: 3.2vw;
     background: #fff;
     cursor: pointer;
   }
   #burger span {
     display: block;
-    width: 26px;
-    height: 3px;
-    margin: 4.5px auto;
-    border-radius: 2px;
+    width: 6.933vw;
+    height: 0.8vw;
+    margin: 1.2vw auto;
+    border-radius: 0.533vw;
     background: var(--ink);
     transition: transform 0.3s, opacity 0.3s;
   }
   body.menu-open #burger span:nth-child(1) {
-    transform: translateY(7.5px) rotate(45deg);
+    transform: translateY(2vw) rotate(45deg);
   }
   body.menu-open #burger span:nth-child(2) {
     opacity: 0;
   }
   body.menu-open #burger span:nth-child(3) {
-    transform: translateY(-7.5px) rotate(-45deg);
+    transform: translateY(-2vw) rotate(-45deg);
   }
 
+  /* на мобилке топпера нет — только фиксированный бургер */
   .header {
     position: static;
+    height: auto;
+    background: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
   .mainMenu {
     position: fixed;
@@ -45,10 +53,10 @@
     z-index: 50;
     display: flex;
     flex-direction: column;
-    gap: 28px;
-    padding: 92px 28px;
+    gap: 7.467vw;
+    padding: 24.533vw 7.467vw;
     background: #fff;
-    box-shadow: -8px 0 40px rgba(0, 0, 0, 0.12);
+    box-shadow: -2.133vw 0 10.667vw rgba(0, 0, 0, 0.12);
     transition: right 0.35s ease;
   }
   body.menu-open .mainMenu {
@@ -64,13 +72,23 @@
   }
   .mainMenu a {
     position: static; /* сбрасываем десктопные left */
-    font-size: 20px;
+    font-size: 5.333vw;
+  }
+  /* подчёркивание из animation.css рассчитано на absolute-ссылки
+     десктопа — в статичном мобильном меню его прячем */
+  .mainMenu a::after {
+    display: none;
+  }
+
+  /* --- Полоска прогресса скролла: потолще под мобильный экран --- */
+  .scrollProgress {
+    width: 0.8vw;
   }
 
   /* --- Герой: обычный поток вместо пиксельной раскладки --- */
   .hero {
     height: auto;
-    padding: 76px 20px 8px;
+    padding: 20.267vw 5.333vw 2.133vw;
   }
   .hero__line {
     position: static;
@@ -84,7 +102,7 @@
   }
   .hero__subtitle {
     position: static;
-    margin-top: 20px;
+    margin-top: 5.333vw;
     font-size: 5.2vw;
     line-height: 1.35;
   }
@@ -93,103 +111,149 @@
     width: 100%;
     height: auto;
     aspect-ratio: 1;
-    margin-top: 24px;
-    border-radius: 16px;
+    margin-top: 6.4vw;
+    border-radius: 4.267vw;
   }
 
   /* --- Общие секции --- */
   section {
-    scroll-margin-top: 16px;
+    scroll-margin-top: 4.267vw;
   }
   .about {
-    padding: 72px 20px 8px;
+    padding: 19.2vw 5.333vw 2.133vw;
   }
   .about__title,
   .section__title {
     font-size: 15vw;
-    margin-bottom: 24px;
+    margin-bottom: 6.4vw;
   }
   .about__text {
     max-width: 100%;
     font-size: 4.4vw;
-    margin-bottom: 14px;
+    margin-bottom: 3.733vw;
   }
   .method,
   .cases,
   .prices,
   .resume,
   .contacts {
-    padding: 56px 20px 8px;
+    padding: 14.933vw 5.333vw 2.133vw;
   }
 
   /* --- Методика: в столбик --- */
   .method__list {
     grid-template-columns: 1fr;
-    gap: 26px;
+    gap: 6.933vw;
   }
   .method__num {
     font-size: 9vw;
-    margin-bottom: 4px;
+    margin-bottom: 1.067vw;
   }
   .method__name {
     font-size: 5.4vw;
-    margin-bottom: 4px;
+    margin-bottom: 1.067vw;
   }
   .method__text {
     font-size: 4.2vw;
   }
 
+  /* --- 3D-меню кейсов: почти квадратная панель, подпись сверху --- */
+  .casesMenu {
+    height: 120vw;
+  }
+  #casesMenuCanvas {
+    border-radius: 4.267vw;
+  }
+  .casesMenu__title {
+    left: 5.333vw;
+    right: 5.333vw;
+    top: 6.4vw;
+    max-width: none;
+    font-size: 5.867vw;
+  }
+  .casesMenu__title.active {
+    transform: translate(0, 0);
+  }
+  .casesMenu__title.inactive {
+    transform: translate(0, -2.133vw);
+  }
+  /* описание не влезает — как в оригинале на узких экранах прячем */
+  .casesMenu__desc {
+    display: none;
+  }
+  .casesMenu__btn {
+    width: 13.867vw;
+    height: 13.867vw;
+    bottom: 5.333vw;
+    font-size: 5.867vw;
+  }
+  .casesMenu__hint {
+    top: auto;
+    bottom: 22.4vw;
+    font-size: 3.2vw;
+  }
+  .casesMenu__fs {
+    right: 4.267vw;
+    bottom: 5.333vw;
+    width: 10.667vw;
+    height: 10.667vw;
+  }
+  .casesMenu__fs svg {
+    width: 5.333vw;
+    height: 5.333vw;
+  }
+
   /* --- Кейсы: карточки по две в ряд --- */
   .cases__grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 24px 14px;
+    gap: 6.4vw 3.733vw;
     max-width: 100%;
   }
   .caseCard__cover {
-    border-radius: 12px;
+    border-radius: 3.2vw;
   }
   .caseCard__tag {
-    margin-top: 10px;
-    padding: 3px 10px;
-    border-radius: 20px;
+    margin-top: 2.667vw;
+    padding: 0.8vw 2.667vw;
+    border-radius: 5.333vw;
     font-size: 2.6vw;
   }
   .caseCard__title {
-    margin-top: 6px;
+    margin-top: 1.6vw;
     font-size: 4.6vw;
   }
   .caseCard__desc {
-    margin-top: 4px;
+    margin-top: 1.067vw;
     font-size: 3.2vw;
   }
 
   /* --- Цены --- */
   .prices__intro {
     font-size: 4.4vw;
-    margin-bottom: 20px;
+    margin-bottom: 5.333vw;
   }
   .prices__grid {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 3.733vw;
   }
   .price {
-    border-width: 1px;
-    border-radius: 14px;
-    padding: 20px 18px;
+    border-width: 0.267vw;
+    border-radius: 3.733vw;
+    padding: 5.333vw 4.8vw;
   }
   .price__name {
     font-size: 5vw;
-    margin-bottom: 8px;
+    margin-bottom: 2.133vw;
   }
   .price__value {
     font-size: 7.5vw;
-    margin-bottom: 8px;
+    margin-bottom: 2.133vw;
   }
   .price__desc {
     font-size: 4vw;
   }
   .prices__note {
-    margin-top: 20px;
+    margin-top: 5.333vw;
     font-size: 4.2vw;
   }
 
@@ -197,81 +261,133 @@
   .resume__text,
   .contacts__text {
     font-size: 5.2vw;
-    margin-bottom: 20px;
+    margin-bottom: 5.333vw;
   }
+
+  /* --- CV: колонки в столбик, таймлайн крупнее --- */
+  .cv {
+    grid-template-columns: 1fr;
+    gap: 9.6vw;
+    max-width: 100%;
+    margin-bottom: 9.6vw;
+  }
+  .cv__heading {
+    font-size: 6.4vw;
+    margin-bottom: 4.267vw;
+  }
+  .cv__item {
+    padding: 0 0 5.333vw 5.867vw;
+    border-left-width: 0.4vw;
+  }
+  .cv__item:last-child {
+    padding-bottom: 1.333vw;
+  }
+  .cv__item::before {
+    left: -1.2vw;
+    top: 0.533vw;
+    width: 2.133vw;
+    height: 2.133vw;
+  }
+  .cv__period {
+    font-size: 3.2vw;
+  }
+  .cv__role {
+    margin-top: 1.6vw;
+    font-size: 5vw;
+  }
+  .cv__place {
+    margin-top: 1.067vw;
+    font-size: 3.7vw;
+  }
+  .cv__desc {
+    margin-top: 1.6vw;
+    font-size: 4vw;
+  }
+  .cv__skills {
+    gap: 2.133vw;
+    max-width: 100%;
+    margin-bottom: 8.533vw;
+  }
+  .cv__chip {
+    padding: 1.867vw 4.267vw;
+    border-radius: 6.4vw;
+    font-size: 3.5vw;
+    box-shadow: inset 0 0 0 0.4vw #e3e3e3;
+  }
+
   .resume__actions,
   .contacts__actions {
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 2.667vw;
   }
   .btn {
-    padding: 12px 24px;
-    border-radius: 26px;
+    padding: 3.2vw 6.4vw;
+    border-radius: 6.933vw;
     font-size: 4.4vw;
   }
   .btn--ghost {
-    box-shadow: inset 0 0 0 1.5px var(--ink);
+    box-shadow: inset 0 0 0 0.4vw var(--ink);
   }
 
   .footer {
-    padding: 40px 20px 20px;
+    padding: 10.667vw 5.333vw 5.333vw;
     font-size: 3.4vw;
   }
 
   /* --- Страница кейса --- */
   .caseDetail {
-    padding: 76px 20px 8px;
+    padding: 20.267vw 5.333vw 2.133vw;
   }
   .caseDetail__back {
-    margin-bottom: 18px;
+    margin-bottom: 4.8vw;
     font-size: 4.2vw;
   }
   .caseDetail__title {
-    margin-top: 10px;
+    margin-top: 2.667vw;
     font-size: 11.5vw;
   }
   .caseDetail__subtitle {
-    margin-top: 8px;
+    margin-top: 2.133vw;
     font-size: 5vw;
   }
   .caseDetail__meta {
     flex-direction: column;
-    gap: 6px;
-    margin-top: 14px;
+    gap: 1.6vw;
+    margin-top: 3.733vw;
     font-size: 4vw;
   }
   .caseDetail__star {
     grid-template-columns: 1fr;
-    gap: 22px;
-    margin-top: 28px;
+    gap: 5.867vw;
+    margin-top: 7.467vw;
   }
   .case__label {
     font-size: 3.4vw;
-    margin-bottom: 6px;
+    margin-bottom: 1.6vw;
   }
   .caseDetail__block p {
     font-size: 4.3vw;
   }
   .caseDetail__imgs {
-    margin-top: 32px;
+    margin-top: 8.533vw;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    gap: 2.667vw;
   }
   .caseDetail__imgs img {
-    border-radius: 8px;
+    border-radius: 2.133vw;
   }
   .caseDetail__cols {
     columns: 2;
-    column-gap: 10px;
+    column-gap: 2.667vw;
   }
   .caseDetail__cols img {
-    margin-bottom: 10px;
+    margin-bottom: 2.667vw;
   }
   .caseDetail__next {
-    margin-top: 44px;
+    margin-top: 11.733vw;
   }
   .caseDetail__cta {
     font-size: 5.2vw;
-    margin-bottom: 16px;
+    margin-bottom: 4.267vw;
   }
 }

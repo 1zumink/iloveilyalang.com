@@ -160,6 +160,68 @@ body {
   line-height: 1.5;
 }
 
+/* ===================== ДОСТИЖЕНИЯ =====================
+   Список побед в стиле таймлайна резюме: линия сбоку,
+   значок-кубок на линии, дата как в CV, кнопка на кейс. */
+.achievements__list {
+  max-width: 72vw;
+  margin: 0 auto;
+  list-style: none;
+  padding: 0;
+}
+.achievement {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 2.5vw;
+  padding: 0 0 2.8vw 3.2vw;
+  border-left: 0.14vw solid #e3e3e3;
+  transition: border-color 0.3s ease;
+}
+.achievement:last-child {
+  padding-bottom: 0.5vw;
+}
+/* значок-кубок сидит на линии — как точки таймлайна в резюме */
+.achievement__badge {
+  position: absolute;
+  left: -1.67vw;
+  top: -0.2vw;
+  display: grid;
+  place-items: center;
+  width: 3.2vw;
+  height: 3.2vw;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+}
+.achievement__badge svg {
+  width: 1.6vw;
+  height: 1.6vw;
+}
+.achievement__period {
+  display: block;
+  font-weight: 500;
+  font-size: 0.95vw;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.achievement__name {
+  margin-top: 0.5vw;
+  font-weight: 500;
+  font-size: 1.8vw;
+  line-height: 1.2;
+}
+.achievement__meta {
+  margin-top: 0.5vw;
+  font-size: 1.1vw;
+  color: #444;
+}
+.achievement__btn {
+  white-space: nowrap;
+}
+
 /* Фото: квадрат 291×291, справа 73, верх 121 (по первой строке) */
 .hero__photo {
   position: absolute;
@@ -185,7 +247,8 @@ body {
 .cases,
 .prices,
 .resume,
-.contacts {
+.contacts,
+.achievements {
   padding: 8vw 5.139vw 4vw;
 }
 
@@ -343,10 +406,15 @@ body {
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: var(--accent);
-  color: #fff;
-  font-size: 1.9vw;
+  /* инвертирована: белая с акцентной стрелкой, чтобы не сливалась
+     с розовыми обложками сферы */
+  background: #fff;
+  color: var(--accent);
   text-decoration: none;
+}
+.casesMenu__btn svg {
+  width: 1.9vw;
+  height: 1.9vw;
 }
 .casesMenu__hint {
   position: absolute;
@@ -650,6 +718,21 @@ body {
   display: flex;
   justify-content: center;
   gap: 1.5vw;
+}
+
+/* ===================== ЛЕНТА ЗА КУРСОРОМ =====================
+   Контейнер создаёт javascripts/ribbons.js (порт React Bits <Ribbons />):
+   слой поверх всей страницы, клики пропускает. */
+.ribbons {
+  position: fixed;
+  inset: 0;
+  z-index: 75;
+  pointer-events: none;
+}
+.ribbons canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 /* ===================== ФУТЕР ===================== */

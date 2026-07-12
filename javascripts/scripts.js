@@ -36,28 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ================================================================
-  // Смена темы по скроллу: секции с data-theme="pink|dark" красят
-  // <body> в свой цвет, когда доходят до центра экрана (как «Обо мне»).
-  // ================================================================
-  const themedSections = document.querySelectorAll('[data-theme]');
-  if (themedSections.length && 'IntersectionObserver' in window) {
-    const themeObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          document.body.classList.toggle(
-            'theme-' + entry.target.dataset.theme,
-            entry.isIntersecting
-          );
-        });
-      },
-      // Триггер-полоса по центру экрана: тема включается, когда блок
-      // доходит до середины вьюпорта, и выключается, когда уходит.
-      { root: null, threshold: 0, rootMargin: '-35% 0px -35% 0px' }
-    );
-    themedSections.forEach((s) => themeObserver.observe(s));
-  }
-
-  // ================================================================
   // Общий rAF-цикл: всё, что зависит от скролла/мыши, обновляется
   // одним кадром, без лишних перерисовок.
   // ================================================================
@@ -85,6 +63,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const p = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
     progressBar.style.transform = 'scaleY(' + p.toFixed(4) + ')';
   });
+
+  // ================================================================
+  // Смена темы по скроллу: страница разбита на цветовые зоны.
+  // Тема берётся у последней секции с data-theme="pink|dark", чей верх
+  // прошёл центр экрана, и действует до следующей такой секции —
+  // цветные зоны сменяют друг друга без белых промежутков.
+  // ================================================================
+  const themedSections = [...document.querySelectorAll('[data-theme]')];
+  if (themedSections.length) {
+    scrollFxs.push(() => {
+      const center = window.scrollY + window.innerHeight * 0.5;
+      let theme = null;
+      themedSections.forEach((s) => {
+        if (s.offsetTop <= center) theme = s.dataset.theme;
+      });
+      document.body.classList.toggle('theme-pink', theme === 'pink');
+      document.body.classList.toggle('theme-dark', theme === 'dark');
+    });
+  }
 
   // ================================================================
   // Подсветка активного пункта меню по скроллу (только на главной:
@@ -149,6 +146,7 @@ document.addEventListener('DOMContentLoaded', () => {
       '.section__title',
       '.about__title',
       '.about__text',
+      '.achievement',
       '.method__step',
       '.casesMenu',
       '.caseCard',

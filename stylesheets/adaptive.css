@@ -132,11 +132,52 @@
     font-size: 4.4vw;
     margin-bottom: 3.733vw;
   }
+  /* --- Достижения: строки в столбик, кнопка под текстом --- */
+  .achievements__list {
+    max-width: 100%;
+  }
+  .achievement {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 3.2vw;
+    padding: 0 0 8vw 8vw;
+    border-left-width: 0.4vw;
+  }
+  .achievement:last-child {
+    padding-bottom: 1.333vw;
+  }
+  .achievement__badge {
+    left: -5vw;
+    top: 0;
+    width: 9.6vw;
+    height: 9.6vw;
+  }
+  .achievement__badge svg {
+    width: 4.8vw;
+    height: 4.8vw;
+  }
+  .achievement__period {
+    font-size: 3.2vw;
+  }
+  .achievement__name {
+    margin-top: 1.6vw;
+    font-size: 5vw;
+  }
+  /* кнопка — под текстом */
+  .achievement__btn {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+  .achievement__meta {
+    margin-top: 1.067vw;
+    font-size: 3.7vw;
+  }
   .method,
   .cases,
   .prices,
   .resume,
-  .contacts {
+  .contacts,
+  .achievements {
     padding: 14.933vw 5.333vw 2.133vw;
   }
 
@@ -185,7 +226,10 @@
     width: 13.867vw;
     height: 13.867vw;
     bottom: 5.333vw;
-    font-size: 5.867vw;
+  }
+  .casesMenu__btn svg {
+    width: 5.867vw;
+    height: 5.867vw;
   }
   .casesMenu__hint {
     top: auto;

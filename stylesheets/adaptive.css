@@ -8,7 +8,7 @@
     display: block;
     position: fixed;
     top: 3.733vw;
-    right: 3.733vw;
+    right: 5.333vw;
     z-index: 60;
     width: 11.733vw;
     height: 11.733vw;
@@ -79,16 +79,34 @@
   .mainMenu a::after {
     display: none;
   }
+  /* панель меню всегда белая, поэтому пункты всегда тёмные —
+     белые ссылки из тем топпера (theme-pink/dark) здесь невидимы */
+  body.theme-pink .mainMenu a,
+  body.theme-dark .mainMenu a {
+    color: var(--ink);
+  }
+  body.theme-pink .mainMenu a.active,
+  body.theme-dark .mainMenu a.active {
+    color: var(--accent);
+  }
 
   /* --- Полоска прогресса скролла: потолще под мобильный экран --- */
   .scrollProgress {
     width: 0.8vw;
   }
 
-  /* --- Герой: обычный поток вместо пиксельной раскладки --- */
+  /* --- Кастомный курсор: если к узкому экрану подключена мышь --- */
+  .cursorDot {
+    width: 2.133vw;
+    height: 2.133vw;
+    margin: -1.067vw 0 0 -1.067vw;
+  }
+
+  /* --- Герой: обычный поток, по центру, с воздухом по бокам --- */
   .hero {
     height: auto;
-    padding: 20.267vw 5.333vw 2.133vw;
+    padding: 20.267vw 8vw 4vw;
+    text-align: center;
   }
   .hero__line {
     position: static;
@@ -120,11 +138,12 @@
     scroll-margin-top: 4.267vw;
   }
   .about {
-    padding: 19.2vw 5.333vw 2.133vw;
+    padding: 19.2vw 8vw 4vw;
   }
+  /* 12vw, чтобы «Достижения» влезали в строку с отступами 8vw */
   .about__title,
   .section__title {
-    font-size: 15vw;
+    font-size: 12vw;
     margin-bottom: 6.4vw;
   }
   .about__text {
@@ -172,13 +191,14 @@
     margin-top: 1.067vw;
     font-size: 3.7vw;
   }
+  /* все секции по центру, с воздухом 8vw с каждой стороны */
   .method,
   .cases,
   .prices,
   .resume,
   .contacts,
   .achievements {
-    padding: 14.933vw 5.333vw 2.133vw;
+    padding: 14.933vw 8vw 4vw;
   }
 
   /* --- Методика: в столбик --- */
@@ -374,13 +394,13 @@
   }
 
   .footer {
-    padding: 10.667vw 5.333vw 5.333vw;
+    padding: 10.667vw 8vw 5.333vw;
     font-size: 3.4vw;
   }
 
   /* --- Страница кейса --- */
   .caseDetail {
-    padding: 20.267vw 5.333vw 2.133vw;
+    padding: 20.267vw 8vw 4vw;
   }
   .caseDetail__back {
     margin-bottom: 4.8vw;
@@ -433,5 +453,59 @@
   .caseDetail__cta {
     font-size: 5.2vw;
     margin-bottom: 4.267vw;
+  }
+
+  /* --- Появление по скроллу: на мобилке элементы въезжают сбоку,
+     чипы выпрыгивают — больше движения именно на скролл,
+     раз ховеров на таче нет --- */
+  @keyframes revealLeftM {
+    from {
+      opacity: 0;
+      transform: translateX(-6.4vw);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes revealRightM {
+    from {
+      opacity: 0;
+      transform: translateX(6.4vw);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes revealPopM {
+    from {
+      opacity: 0;
+      transform: scale(0.7);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .method__step.is-visible,
+  .cv__item.is-visible,
+  .achievement.is-visible {
+    animation-name: revealLeftM;
+  }
+  .caseCard.is-visible:nth-child(odd) {
+    animation-name: revealLeftM;
+  }
+  .caseCard.is-visible:nth-child(even) {
+    animation-name: revealRightM;
+  }
+  .price.is-visible:nth-child(odd) {
+    animation-name: revealLeftM;
+  }
+  .price.is-visible:nth-child(even) {
+    animation-name: revealRightM;
+  }
+  .cv__chip.is-visible {
+    animation-name: revealPopM;
   }
 }

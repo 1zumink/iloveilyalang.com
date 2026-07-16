@@ -85,9 +85,6 @@ body {
 .mainMenu a:nth-child(5) {
   left: 81.806vw;
 }
-.mainMenu a:hover {
-  color: var(--accent);
-}
 
 /* Герой занимает фиксированную высоту (≈ низ подзаголовка),
    чтобы блоки ниже вставали в нормальном потоке. */
@@ -264,9 +261,6 @@ body {
   text-decoration: none;
   transition: opacity 0.2s;
 }
-.btn:hover {
-  opacity: 0.85;
-}
 .btn--ghost {
   background: transparent;
   color: var(--ink);
@@ -319,9 +313,6 @@ body {
   border-radius: 1.2vw;
   display: block;
   transition: transform 0.3s ease;
-}
-.caseCard:hover .caseCard__cover {
-  transform: scale(1.02);
 }
 .caseCard__tag {
   display: inline-block;
@@ -476,9 +467,6 @@ body {
   text-decoration: none;
   font-size: 1.2vw;
   transition: color 0.2s;
-}
-.caseDetail__back:hover {
-  color: var(--accent);
 }
 .caseDetail__title {
   margin-top: 1.2vw;
@@ -649,13 +637,6 @@ body {
   background: var(--accent);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.cv__item:hover {
-  border-color: var(--accent);
-}
-.cv__item:hover::before {
-  transform: scale(1.45);
-  box-shadow: 0 0 0 0.4vw rgba(255, 34, 152, 0.18);
-}
 .cv__period {
   display: block;
   font-weight: 500;
@@ -701,12 +682,6 @@ body {
   transition: background 0.25s ease, color 0.25s ease,
     box-shadow 0.25s ease, transform 0.25s ease;
 }
-.cv__chip:hover {
-  background: var(--accent);
-  color: #fff;
-  box-shadow: inset 0 0 0 0.14vw var(--accent);
-  transform: translateY(-0.25vw);
-}
 .resume__text,
 .contacts__text {
   font-size: 2vw;
@@ -720,19 +695,45 @@ body {
   gap: 1.5vw;
 }
 
-/* ===================== ЛЕНТА ЗА КУРСОРОМ =====================
-   Контейнер создаёт javascripts/ribbons.js (порт React Bits <Ribbons />):
-   слой поверх всей страницы, клики пропускает. */
-.ribbons {
-  position: fixed;
-  inset: 0;
-  z-index: 75;
-  pointer-events: none;
+/* ===================== КАСТОМНЫЙ КУРСОР =====================
+   Точка вместо системной стрелки (создаёт scripts.js на устройствах
+   с мышью). Системный курсор прячет класс custom-cursor на <body>;
+   позицию задаёт JS через transform на внешнем слое, визуальная
+   точка — ::before (масштаб и цвет анимируются отдельно). */
+body.custom-cursor,
+body.custom-cursor * {
+  cursor: none !important;
 }
-.ribbons canvas {
+.cursorDot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 80;
+  width: 0.76vw;
+  height: 0.76vw;
+  margin: -0.38vw 0 0 -0.38vw; /* центр точки — в точке курсора */
+  pointer-events: none;
+  opacity: 0;
+}
+.cursorDot::before {
+  content: '';
   display: block;
   width: 100%;
   height: 100%;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* ===================== ТРЕЙЛ ЗА КУРСОРОМ =====================
+   Канвас на всю страницу (создаёт scripts.js): «комета» тянется
+   за курсором, клики пропускает. */
+.cursorTrail {
+  position: fixed;
+  inset: 0;
+  z-index: 75;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
 }
 
 /* ===================== ФУТЕР ===================== */

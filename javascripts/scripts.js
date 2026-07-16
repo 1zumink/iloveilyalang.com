@@ -134,6 +134,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // ================================================================
+  // Мобилка: лёгкий параллакс героя по скроллу — фото плавно уезжает
+  // вниз и слегка уменьшается. Ховеров на таче нет, движение
+  // добавляем именно на скролл.
+  // ================================================================
+  if (!REDUCE_MOTION && !DESKTOP.matches) {
+    const photo = document.querySelector('.hero__photo');
+    if (photo) {
+      scrollFxs.push(() => {
+        const syVw = (window.scrollY / window.innerWidth) * 100;
+        if (syVw > 160) return; // герой давно уехал за экран
+        const scale = Math.max(0.94, 1 - syVw * 0.0006);
+        photo.style.transform =
+          'translateY(' +
+          (syVw * 0.1).toFixed(3) +
+          'vw) scale(' +
+          scale.toFixed(4) +
+          ')';
+      });
+    }
+  }
+
   queueUpdate(); // первый кадр сразу, не дожидаясь скролла
 
   // ================================================================
@@ -275,5 +297,170 @@ document.addEventListener('DOMContentLoaded', () => {
       { threshold: 0.6 }
     );
     priceValues.forEach((el) => priceObserver.observe(el));
+  }
+
+  // ================================================================
+  // Кастомный курсор: точка как в таймлайне резюме вместо системной
+  // стрелки. Цвет следует за темой (как лента за курсором), над
+  // интерактивными элементами точка слегка растёт. Только для мыши.
+  // ================================================================
+  if (!REDUCE_MOTION && FINE_POINTER) {
+    const dot = document.createElement('div');
+    dot.className = 'cursorDot';
+    document.body.appendChild(dot);
+    document.body.classList.add('custom-cursor');
+
+    // над чем точка увеличивается — всё кликабельное/хватательное
+    const INTERACTIVE =
+      'a, button, input, select, textarea, label, [role="button"], #burger, #casesMenuCanvas';
+
+    document.addEventListener(
+      'mousemove',
+      (e) => {
+        // координаты в vw, чтобы масштабировались как всё остальное
+        const x = ((e.clientX / window.innerWidth) * 100).toFixed(3);
+        const y = ((e.clientY / window.innerWidth) * 100).toFixed(3);
+        dot.style.transform = 'translate3d(' + x + 'vw, ' + y + 'vw, 0)';
+        dot.style.opacity = 1;
+        const closest = (sel) => !!(e.target.closest && e.target.closest(sel));
+        dot.classList.toggle('cursorDot--active', closest(INTERACTIVE));
+        // над тёмной панелью кейсов точка белеет, иначе теряется
+        // на чёрном; исключение — белая кнопка открытия кейса
+        dot.classList.toggle(
+          'cursorDot--onDark',
+          closest('.casesMenu') && !closest('.casesMenu__btn')
+        );
+      },
+      { passive: true }
+    );
+
+    // захват сферы кейсов: точка «прижимается» на pointerdown
+    // и отпускается на release — вместо системного курсора-руки
+    const grabArea = document.getElementById('casesMenuCanvas');
+    if (grabArea) {
+      grabArea.addEventListener('pointerdown', () => {
+        dot.classList.add('cursorDot--grabbing');
+      });
+      ['pointerup', 'pointercancel', 'pointerleave'].forEach((type) => {
+        grabArea.addEventListener(type, () => {
+          dot.classList.remove('cursorDot--grabbing');
+        });
+      });
+    }
+    // курсор ушёл за пределы окна — точка исчезает
+    document.documentElement.addEventListener('mouseleave', () => {
+      dot.style.opacity = 0;
+    });
+
+    // в полноэкранном режиме кейсов точку переносим внутрь
+    // fullscreen-элемента (top layer перекрывает всё снаружи) —
+    // кастомный курсор продолжает работать и там
+    const syncCursorWithFullscreen = () => {
+      const fs =
+        document.fullscreenElement || document.webkitFullscreenElement;
+      (fs || document.body).appendChild(dot);
+    };
+    document.addEventListener('fullscreenchange', syncCursorWithFullscreen);
+    document.addEventListener(
+      'webkitfullscreenchange',
+      syncCursorWithFullscreen
+    );
+  }
+
+  // ================================================================
+  // Трейл за курсором: «комета» на 2D-канвасе. Хвост из сглаженных
+  // точек тянется за мышью и сходит на нет; цвет следует за темой
+  // (тот же, что у точки курсора). Только для мыши.
+  // ================================================================
+  if (!REDUCE_MOTION && FINE_POINTER) {
+    const trail = document.createElement('canvas');
+    trail.className = 'cursorTrail';
+    document.body.appendChild(trail);
+    const trailCtx = trail.getContext('2d');
+    const TRAIL_DPR = Math.min(2, window.devicePixelRatio || 1);
+    const sizeTrail = () => {
+      trail.width = Math.round(window.innerWidth * TRAIL_DPR);
+      trail.height = Math.round(window.innerHeight * TRAIL_DPR);
+    };
+    sizeTrail();
+    window.addEventListener('resize', sizeTrail);
+
+    // цвет хвоста по теме — как у точки курсора
+    const TRAIL_RGB = {
+      white: [255, 34, 152], // акцент на белом
+      pink: [18, 18, 18], // чёрный на розовом
+      dark: [255, 255, 255] // белый на тёмном
+    };
+    // курсор над тёмной панелью кейсов — хвост белеет, как и точка
+    let overDarkPanel = false;
+    const trailTarget = () => {
+      if (overDarkPanel) return TRAIL_RGB.dark;
+      if (document.body.classList.contains('theme-pink')) {
+        return TRAIL_RGB.pink;
+      }
+      if (document.body.classList.contains('theme-dark')) {
+        return TRAIL_RGB.dark;
+      }
+      return TRAIL_RGB.white;
+    };
+
+    const POINTS = 22;
+    const pts = [];
+    const trailColor = trailTarget().slice();
+    const mousePos = { x: 0, y: 0 };
+    let trailStarted = false;
+    document.addEventListener(
+      'mousemove',
+      (e) => {
+        mousePos.x = e.clientX;
+        mousePos.y = e.clientY;
+        // та же логика, что у точки курсора: над панелью кейсов
+        // (кроме белой кнопки) хвост перекрашивается в белый
+        const closest = (sel) => !!(e.target.closest && e.target.closest(sel));
+        overDarkPanel = closest('.casesMenu') && !closest('.casesMenu__btn');
+        if (!trailStarted) {
+          // хвост стартует собранным в точке курсора
+          trailStarted = true;
+          for (let i = 0; i < POINTS; i++) {
+            pts.push({ x: mousePos.x, y: mousePos.y });
+          }
+        }
+      },
+      { passive: true }
+    );
+
+    const drawTrail = () => {
+      requestAnimationFrame(drawTrail);
+      if (!trailStarted) return;
+      // плавное перекрашивание под тему
+      const target = trailTarget();
+      for (let c = 0; c < 3; c++) {
+        trailColor[c] += (target[c] - trailColor[c]) * 0.08;
+      }
+      // голова тянется к мыши, каждая точка хвоста — за предыдущей
+      pts[0].x += (mousePos.x - pts[0].x) * 0.55;
+      pts[0].y += (mousePos.y - pts[0].y) * 0.55;
+      for (let i = 1; i < POINTS; i++) {
+        pts[i].x += (pts[i - 1].x - pts[i].x) * 0.45;
+        pts[i].y += (pts[i - 1].y - pts[i].y) * 0.45;
+      }
+      trailCtx.clearRect(0, 0, trail.width, trail.height);
+      trailCtx.lineCap = 'round';
+      trailCtx.lineJoin = 'round';
+      // ширина головы ≈ 9px макета 1440, к хвосту сходит на нет
+      const baseWidth = window.innerWidth * (9 / 1440) * TRAIL_DPR;
+      const rgb = trailColor.map((c) => Math.round(c)).join(',');
+      for (let i = 1; i < POINTS; i++) {
+        const k = 1 - i / POINTS;
+        trailCtx.strokeStyle =
+          'rgba(' + rgb + ',' + (0.35 * k).toFixed(3) + ')';
+        trailCtx.lineWidth = Math.max(1, baseWidth * k);
+        trailCtx.beginPath();
+        trailCtx.moveTo(pts[i - 1].x * TRAIL_DPR, pts[i - 1].y * TRAIL_DPR);
+        trailCtx.lineTo(pts[i].x * TRAIL_DPR, pts[i].y * TRAIL_DPR);
+        trailCtx.stroke();
+      }
+    };
+    drawTrail();
   }
 });

@@ -45,23 +45,14 @@ body.theme-pink .method__num {
 body.theme-pink .method__text {
   color: rgba(255, 255, 255, 0.85);
 }
-body.theme-pink .method__step:hover .method__text {
-  color: #fff;
-}
 /* Кнопки на розовом: розовая заливка не видна — чёрная */
 body.theme-pink .btn {
   background: var(--ink);
-}
-body.theme-pink .btn:hover {
-  box-shadow: 0 0.7vw 2vw rgba(18, 18, 18, 0.35);
 }
 body.theme-pink .btn--ghost {
   background: transparent;
   color: #fff;
   box-shadow: inset 0 0 0 0.15vw #fff;
-}
-body.theme-pink .btn--ghost:hover {
-  box-shadow: inset 0 0 0 0.15vw #fff, 0 0.7vw 2vw rgba(18, 18, 18, 0.3);
 }
 /* Фолбэк-сетка кейсов на розовом */
 body.theme-pink .caseCard {
@@ -111,9 +102,6 @@ body.theme-dark .cv__chip {
   box-shadow: inset 0 0 0 0.14vw #3a3a3a;
   color: #fff;
 }
-body.theme-dark .cv__chip:hover {
-  box-shadow: inset 0 0 0 0.14vw var(--accent);
-}
 
 /* ===================== ПРОГРЕСС СКРОЛЛА =====================
    Вертикальная полоска у правого края; высоту (scaleY)
@@ -150,9 +138,8 @@ body.theme-pink .mainMenu a,
 body.theme-dark .mainMenu a {
   color: #fff;
 }
-/* на розовом фоне акцент не читается — активный/ховер пункт чёрный */
-body.theme-pink .mainMenu a.active,
-body.theme-pink .mainMenu a:hover {
+/* на розовом фоне акцент не читается — активный пункт чёрный */
+body.theme-pink .mainMenu a.active {
   color: var(--ink);
 }
 body.theme-pink .mainMenu a::after {
@@ -216,7 +203,6 @@ body.theme-pink .mainMenu a::after {
   transform-origin: right;
   transition: transform 0.3s ease;
 }
-.mainMenu a:hover::after,
 .mainMenu a.active::after {
   transform: scaleX(1);
   transform-origin: left;
@@ -258,15 +244,6 @@ body.theme-pink .mainMenu a::after {
   transition: opacity 0.2s, transform 0.3s cubic-bezier(0.33, 1.4, 0.5, 1),
     box-shadow 0.3s ease, background-color 0.6s ease;
 }
-.btn:hover {
-  box-shadow: 0 0.7vw 2vw rgba(255, 34, 152, 0.3);
-}
-.btn--ghost:hover {
-  box-shadow: inset 0 0 0 0.15vw var(--ink), 0 0.7vw 2vw rgba(0, 0, 0, 0.12);
-}
-body.theme-dark .btn--ghost:hover {
-  box-shadow: inset 0 0 0 0.15vw #fff, 0 0.7vw 2vw rgba(0, 0, 0, 0.4);
-}
 
 /* Карточки кейсов и цен: 3D-наклон из JS + тень */
 .caseCard,
@@ -274,64 +251,29 @@ body.theme-dark .btn--ghost:hover {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   will-change: transform;
 }
-.caseCard:hover,
-.price:hover {
-  box-shadow: 0 1.2vw 3vw rgba(0, 0, 0, 0.12);
-}
 .caseCard {
   border-radius: 1.2vw;
 }
-.price:hover {
-  border-color: var(--accent);
-}
 
-/* Достижения: линия и значок ведут себя как таймлайн в резюме */
-.achievement:hover {
-  border-color: var(--accent);
-}
+/* Достижения: переходы для ховеров (сами ховеры — в блоке ниже) */
 .achievement__badge {
   transition: box-shadow 0.3s ease;
 }
-.achievement:hover .achievement__badge {
-  box-shadow: 0 0 0 0.4vw rgba(255, 34, 152, 0.18);
-}
-
-/* Достижения: кнопка «Смотреть кейс» на ховере заливается розовым */
 .achievement__btn {
   transition: opacity 0.2s, transform 0.3s cubic-bezier(0.33, 1.4, 0.5, 1),
     box-shadow 0.3s ease, background-color 0.25s ease, color 0.25s ease;
 }
-.achievement__btn:hover {
-  background: var(--accent);
-  color: #fff;
-  box-shadow: inset 0 0 0 0.15vw var(--accent),
-    0 0.7vw 2vw rgba(255, 34, 152, 0.3);
-}
 
-/* Шаги методики: номер подпрыгивает, текст темнеет */
+/* Шаги методики и фото хиро: переходы для ховеров */
 .method__num {
   display: inline-block;
   transition: transform 0.3s cubic-bezier(0.33, 1.6, 0.5, 1);
 }
-.method__step:hover .method__num {
-  transform: translateY(-0.35vw) scale(1.12);
-}
 .method__text {
   transition: color 0.3s ease;
 }
-.method__step:hover .method__text {
-  color: var(--ink);
-}
-body.theme-dark .method__step:hover .method__text {
-  color: #fff;
-}
-
-/* Фото в хиро: лёгкое приближение */
 .hero__photo {
   transition: box-shadow 0.35s ease;
-}
-.hero__photo:hover {
-  box-shadow: 0 1.5vw 4vw rgba(0, 0, 0, 0.18);
 }
 
 /* ===================== 3D-МЕНЮ КЕЙСОВ =====================
@@ -383,12 +325,6 @@ body.theme-dark .method__step:hover .method__text {
   transform: translateX(-50%) scale(0);
   transition: opacity 0.15s ease, transform 0.15s ease;
 }
-.casesMenu__btn.active:hover {
-  transform: translateX(-50%) scale(1.1);
-  background: var(--accent);
-  color: #fff;
-  box-shadow: 0 0.7vw 2vw rgba(18, 18, 18, 0.35);
-}
 .casesMenu__hint {
   transition: opacity 0.5s ease;
 }
@@ -398,9 +334,145 @@ body.theme-dark .method__step:hover .method__text {
 .casesMenu__fs {
   transition: background 0.25s ease, transform 0.25s ease;
 }
-.casesMenu__fs:hover {
-  background: rgba(255, 255, 255, 0.28);
-  transform: scale(1.1);
+
+/* ===================== КАСТОМНЫЙ КУРСОР =====================
+   Цвет точки следует за темой (как лента за курсором): на белом —
+   акцент, на розовом — чёрный, на тёмном — белый. Над интерактивными
+   элементами точка слегка растёт (класс ставит scripts.js). */
+.cursorDot {
+  transition: opacity 0.3s ease;
+}
+.cursorDot::before {
+  transition: transform 0.25s ease, background-color 0.6s ease;
+}
+body.theme-pink .cursorDot::before {
+  background: var(--ink);
+}
+body.theme-dark .cursorDot::before {
+  background: #fff;
+}
+.cursorDot--active::before {
+  transform: scale(1.6);
+}
+/* над тёмной панелью кейсов (и в её полноэкранном режиме) точка
+   белая — чёрная на чёрном не видна; селекторы с темами перебивают
+   правила theme-pink/dark по специфичности */
+.cursorDot--onDark::before,
+body.theme-pink .cursorDot--onDark::before,
+body.theme-dark .cursorDot--onDark::before {
+  background: #fff;
+}
+/* захват сферы: на pointerdown точка прижимается,
+   на отпускании возвращается к ховер-размеру */
+.cursorDot--grabbing::before {
+  transform: scale(1.05);
+}
+
+/* ===================== ХОВЕРЫ: только устройства с мышью =====================
+   На таче ховера нет, поэтому все эффекты наведения собраны здесь
+   и включаются только при (hover: hover) and (pointer: fine). */
+@media (hover: hover) and (pointer: fine) {
+  /* меню */
+  .mainMenu a:hover {
+    color: var(--accent);
+  }
+  body.theme-pink .mainMenu a:hover {
+    color: var(--ink);
+  }
+  .mainMenu a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  /* кнопки */
+  .btn:hover {
+    opacity: 0.85;
+    box-shadow: 0 0.7vw 2vw rgba(255, 34, 152, 0.3);
+  }
+  .btn--ghost:hover {
+    box-shadow: inset 0 0 0 0.15vw var(--ink), 0 0.7vw 2vw rgba(0, 0, 0, 0.12);
+  }
+  body.theme-dark .btn--ghost:hover {
+    box-shadow: inset 0 0 0 0.15vw #fff, 0 0.7vw 2vw rgba(0, 0, 0, 0.4);
+  }
+  body.theme-pink .btn:hover {
+    box-shadow: 0 0.7vw 2vw rgba(18, 18, 18, 0.35);
+  }
+  body.theme-pink .btn--ghost:hover {
+    box-shadow: inset 0 0 0 0.15vw #fff, 0 0.7vw 2vw rgba(18, 18, 18, 0.3);
+  }
+  /* карточки кейсов и цен */
+  .caseCard:hover .caseCard__cover {
+    transform: scale(1.02);
+  }
+  .caseCard:hover,
+  .price:hover {
+    box-shadow: 0 1.2vw 3vw rgba(0, 0, 0, 0.12);
+  }
+  .price:hover {
+    border-color: var(--accent);
+  }
+  /* методика */
+  .method__step:hover .method__num {
+    transform: translateY(-0.35vw) scale(1.12);
+  }
+  .method__step:hover .method__text {
+    color: var(--ink);
+  }
+  body.theme-dark .method__step:hover .method__text {
+    color: #fff;
+  }
+  body.theme-pink .method__step:hover .method__text {
+    color: #fff;
+  }
+  /* фото в хиро */
+  .hero__photo:hover {
+    box-shadow: 0 1.5vw 4vw rgba(0, 0, 0, 0.18);
+  }
+  /* достижения */
+  .achievement:hover {
+    border-color: var(--accent);
+  }
+  .achievement:hover .achievement__badge {
+    box-shadow: 0 0 0 0.4vw rgba(255, 34, 152, 0.18);
+  }
+  .achievement__btn:hover {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: inset 0 0 0 0.15vw var(--accent),
+      0 0.7vw 2vw rgba(255, 34, 152, 0.3);
+  }
+  /* резюме: таймлайн и чипы */
+  .cv__item:hover {
+    border-color: var(--accent);
+  }
+  .cv__item:hover::before {
+    transform: scale(1.45);
+    box-shadow: 0 0 0 0.4vw rgba(255, 34, 152, 0.18);
+  }
+  .cv__chip:hover {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: inset 0 0 0 0.14vw var(--accent);
+    transform: translateY(-0.25vw);
+  }
+  body.theme-dark .cv__chip:hover {
+    box-shadow: inset 0 0 0 0.14vw var(--accent);
+  }
+  /* 3D-меню кейсов */
+  .casesMenu__btn.active:hover {
+    transform: translateX(-50%) scale(1.1);
+    background: var(--accent);
+    color: #fff;
+    box-shadow: 0 0.7vw 2vw rgba(18, 18, 18, 0.35);
+  }
+  .casesMenu__fs:hover {
+    background: rgba(255, 255, 255, 0.28);
+    transform: scale(1.1);
+  }
+  /* страница кейса */
+  .caseDetail__back:hover {
+    color: var(--accent);
+  }
 }
 
 /* ===================== ДОСТУПНОСТЬ =====================

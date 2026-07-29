@@ -1,0 +1,447 @@
+/* ===================== СТРАНИЦА-ИСТОРИЯ КЕЙСА =====================
+   Для кейсов «Нижний Новгород» и «Мерч Т-Банка». Вертикальная
+   последовательность блоков: заголовки, текст и фото. Фото — во всю
+   ширину без боковых отступов; текст — с отступами 10vw на десктопе
+   и 5vw на мобилке. Цвета задаёт <body> через переменные
+   --case-bg / --case-text / --case-head (инлайн-стиль на странице).
+   Все размеры — в vw по правилу проекта. */
+
+body.caseStory-page {
+  background: var(--case-bg);
+  color: var(--case-text);
+}
+
+/* Все акцентные элементы на странице кейса — акцентным цветом кейса
+   (--case-head: Нижний — жёлтый, Т-Банк — фиолетовый), а не розовым. */
+body.caseStory-page ::selection {
+  background: var(--case-head);
+  color: var(--case-bg);
+}
+body.caseStory-page ::-moz-selection {
+  background: var(--case-head);
+  color: var(--case-bg);
+}
+/* курсор-точка */
+body.caseStory-page .cursorDot::before {
+  background: var(--case-head) !important;
+}
+/* полоска прогресса скролла (была розовой) */
+body.caseStory-page .scrollProgress {
+  background: var(--case-head);
+}
+
+/* Шапка на цветном фоне — прозрачная, пункты под цвет текста кейса */
+body.caseStory-page .header {
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+body.caseStory-page .mainMenu a {
+  color: var(--case-text);
+}
+body.caseStory-page .mainMenu a.active {
+  color: var(--case-head);
+}
+/* подчёркивание активного пункта меню (было розовым) */
+body.caseStory-page .mainMenu a::after {
+  background: var(--case-head);
+}
+body.caseStory-page .footer {
+  color: var(--case-text);
+  opacity: 0.6;
+  background: var(--case-bg);
+}
+
+.caseStory {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* --- Шапка кейса (текст, поэтому с отступами) --- */
+.caseStory__intro {
+  padding: 9vw 10vw 4vw;
+}
+.caseStory__back {
+  display: inline-block;
+  margin-bottom: 2.5vw;
+  color: var(--case-text);
+  opacity: 0.7;
+  text-decoration: none;
+  font-size: 1.2vw;
+}
+.caseStory__tag {
+  display: inline-block;
+  padding: 0.4vw 1vw;
+  border-radius: 2vw;
+  background: var(--case-head);
+  color: var(--case-bg);
+  font-weight: 500;
+  font-size: 0.9vw;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.caseStory__title {
+  margin-top: 1.4vw;
+  font-weight: 500;
+  font-size: 5.5vw;
+  line-height: 1.03;
+  letter-spacing: 0.012em;
+  color: var(--case-head);
+}
+.caseStory__subtitle {
+  margin-top: 1.2vw;
+  max-width: 60vw;
+  font-size: 1.9vw;
+  line-height: 1.3;
+}
+.caseStory__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6vw 3vw;
+  list-style: none;
+  padding: 0;
+  margin-top: 2vw;
+  font-size: 1.1vw;
+}
+.caseStory__meta b {
+  font-weight: 500;
+  color: var(--case-head);
+}
+
+/* --- СОВА: ситуация / задача / действия / результат --- */
+.caseStory__star {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5vw 4vw;
+  padding: 3vw 10vw 5vw;
+}
+.caseStory__block-label {
+  display: block;
+  font-weight: 700;
+  font-size: 1.7vw;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--case-head);
+  margin-bottom: 0.9vw;
+}
+.caseStory__block p {
+  font-size: 1.25vw;
+  line-height: 1.55;
+  margin-bottom: 0.9vw;
+}
+.caseStory__block p:last-child {
+  margin-bottom: 0;
+}
+
+/* --- Контентные блоки тела --- */
+.caseStory__heading {
+  padding: 5vw 10vw 2vw;
+  font-weight: 500;
+  font-size: 3.4vw;
+  line-height: 1.05;
+  letter-spacing: 0.012em;
+  color: var(--case-head);
+}
+.caseStory__text {
+  padding: 2vw 10vw;
+  font-size: 1.4vw;
+  line-height: 1.6;
+}
+.caseStory__text p {
+  margin-bottom: 0.9vw;
+}
+.caseStory__text p:last-child {
+  margin-bottom: 0;
+}
+
+/* Фото во всю ширину, без отступов */
+.caseStory__img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Фото по два в ряд без отступов между ними (десктоп).
+   Обе фотки в паре выравниваются по единой высоте: заполняют ячейку
+   через object-fit: cover, центрируются — ровно под границы. */
+.caseStory__pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  align-items: stretch;
+}
+.caseStory__pair img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Слайдер: горизонтальный скролл со снапом, во всю ширину.
+   Обёртку, стрелки и точки-индикатор добавляет scripts.js. */
+.caseStory__sliderWrap {
+  position: relative;
+}
+.caseStory__slider {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.caseStory__slider::-webkit-scrollbar {
+  display: none;
+}
+.caseStory__slider img {
+  flex: 0 0 100%;
+  width: 100%;
+  height: auto;
+  scroll-snap-align: center;
+}
+
+/* Стрелки по бокам — полупрозрачное «матовое стекло» */
+.caseStory__sliderBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 3.6vw;
+  height: 3.6vw;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(20, 20, 20, 0.28);
+  -webkit-backdrop-filter: blur(0.6vw);
+  backdrop-filter: blur(0.6vw);
+  color: #fff;
+  box-shadow: inset 0 0 0 0.1vw rgba(255, 255, 255, 0.55);
+  font-size: 2vw;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s ease, opacity 0.2s ease,
+    transform 0.2s ease;
+}
+.caseStory__sliderBtn svg {
+  width: 1.5vw;
+  height: 1.5vw;
+}
+.caseStory__sliderBtn--prev {
+  left: 1.5vw;
+}
+.caseStory__sliderBtn--next {
+  right: 1.5vw;
+}
+
+/* Индикатор — оверлеем внутри фото, снизу по центру; активная точка
+   вытянута в прогресс-пилюлю. Никакого отступа между слайдами и
+   следующим блоком. */
+.caseStory__sliderDots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 1.4vw;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1vw;
+}
+.caseStory__dot {
+  box-shadow: 0 0.1vw 0.5vw rgba(0, 0, 0, 0.35);
+}
+.caseStory__dot {
+  width: 0.7vw;
+  height: 0.7vw;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--case-text);
+  opacity: 0.35;
+  cursor: pointer;
+  transition: opacity 0.25s ease, width 0.25s ease, background-color 0.25s ease;
+}
+.caseStory__dot.is-active {
+  width: 2.4vw;
+  border-radius: 0.35vw;
+  background: var(--case-head);
+  opacity: 1;
+}
+
+/* --- Участники --- */
+.caseStory__people {
+  padding: 6vw 10vw 8vw;
+}
+.caseStory__people-title {
+  font-weight: 500;
+  font-size: 2.2vw;
+  color: var(--case-head);
+  margin-bottom: 1.6vw;
+}
+.caseStory__people-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1vw 2.5vw;
+  list-style: none;
+  padding: 0;
+  font-size: 1.3vw;
+}
+.caseStory__people-list a {
+  color: var(--case-text);
+  text-decoration: none;
+  box-shadow: inset 0 -0.12vw 0 var(--case-head);
+}
+
+/* --- CTA-плашка внизу кейса (как на СПАРК/Inkspace), под цвета кейса --- */
+.caseStory__cta {
+  padding: 6vw 10vw 8vw;
+  text-align: center;
+  border-top: 0.14vw solid var(--case-head);
+}
+.caseStory__cta-text {
+  font-size: 2.2vw;
+  line-height: 1.3;
+  margin-bottom: 2vw;
+}
+.caseStory__cta-text a {
+  color: var(--case-head);
+  text-decoration: none;
+  font-weight: 500;
+}
+.caseStory__cta-btn {
+  display: inline-block;
+  padding: 1.1vw 2.6vw;
+  border-radius: 3vw;
+  background: var(--case-head);
+  color: var(--case-bg);
+  font-weight: 500;
+  font-size: 1.5vw;
+  text-decoration: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* ===================== МОБИЛЬНАЯ ВЕРСИЯ ===================== */
+@media screen and (max-width: 700px) {
+  /* Выезжающее меню на мобилке — панель под цвет кейса, иначе ссылки
+     (--case-text, у Нижнего белые) тонут на белом фоне панели */
+  body.caseStory-page .mainMenu {
+    background: var(--case-bg);
+    box-shadow: -2.133vw 0 10.667vw rgba(0, 0, 0, 0.35);
+  }
+  body.caseStory-page .mainMenu a {
+    color: var(--case-text);
+  }
+  body.caseStory-page .mainMenu a.active {
+    color: var(--case-head);
+  }
+
+  /* текст — отступы 5vw; фото остаются во всю ширину */
+  .caseStory__intro {
+    padding: 20vw 5vw 4vw;
+  }
+  .caseStory__back {
+    margin-bottom: 5.333vw;
+    font-size: 4vw;
+  }
+  .caseStory__tag {
+    padding: 1.2vw 3.2vw;
+    border-radius: 5.333vw;
+    font-size: 3vw;
+  }
+  .caseStory__title {
+    margin-top: 3.2vw;
+    font-size: 11vw;
+  }
+  .caseStory__subtitle {
+    margin-top: 3.2vw;
+    max-width: none;
+    font-size: 5vw;
+  }
+  .caseStory__meta {
+    flex-direction: column;
+    gap: 1.6vw;
+    margin-top: 5.333vw;
+    font-size: 4vw;
+  }
+  .caseStory__star {
+    grid-template-columns: 1fr;
+    gap: 8vw;
+    padding: 4vw 5vw 8vw;
+  }
+  .caseStory__block-label {
+    font-size: 5.2vw;
+    margin-bottom: 2.4vw;
+  }
+  .caseStory__block p {
+    font-size: 4.3vw;
+    margin-bottom: 3.2vw;
+  }
+  .caseStory__heading {
+    padding: 10vw 5vw 3vw;
+    font-size: 8vw;
+  }
+  .caseStory__text {
+    padding: 4vw 5vw;
+    font-size: 4.4vw;
+  }
+  .caseStory__text p {
+    margin-bottom: 3.2vw;
+  }
+  /* по одной фотке в ряд без отступов */
+  .caseStory__pair {
+    grid-template-columns: 1fr;
+  }
+  /* слайдер: крупнее стрелки и точки под палец */
+  .caseStory__sliderBtn {
+    width: 11vw;
+    height: 11vw;
+    box-shadow: inset 0 0 0 0.4vw rgba(255, 255, 255, 0.55);
+  }
+  .caseStory__sliderBtn svg {
+    width: 5vw;
+    height: 5vw;
+  }
+  .caseStory__sliderBtn--prev {
+    left: 4vw;
+  }
+  .caseStory__sliderBtn--next {
+    right: 4vw;
+  }
+  .caseStory__sliderDots {
+    bottom: 4vw;
+    gap: 2.4vw;
+  }
+  .caseStory__dot {
+    width: 2.4vw;
+    height: 2.4vw;
+  }
+  .caseStory__dot.is-active {
+    width: 7vw;
+    border-radius: 1.2vw;
+  }
+  .caseStory__people {
+    padding: 10vw 5vw 12vw;
+  }
+  .caseStory__people-title {
+    font-size: 6.4vw;
+    margin-bottom: 4.267vw;
+  }
+  .caseStory__people-list {
+    gap: 2.667vw 5.333vw;
+    font-size: 4.4vw;
+  }
+  .caseStory__cta {
+    padding: 12vw 5vw 14vw;
+  }
+  .caseStory__cta-text {
+    font-size: 5.2vw;
+    margin-bottom: 5.333vw;
+  }
+  .caseStory__cta-btn {
+    padding: 3.2vw 6.4vw;
+    border-radius: 6.933vw;
+    font-size: 4.4vw;
+  }
+}

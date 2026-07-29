@@ -945,6 +945,18 @@ void main() {
       link: 'case-inkspace.html',
       title: 'Inkspace',
       description: 'Приложение-соцсеть для тату-комьюнити: весь путь от идеи эскиза до оплаты — в одном месте.'
+    },
+    {
+      image: 'cases/Nizhniy/nizhniy_cover.jpg',
+      link: 'case-nizhniy.html',
+      title: 'Нижний Новгород',
+      description: 'Айдентика фестиваля «Нижний Новгород — столица российского дизайна»: концепция золотого диска и система носителей.'
+    },
+    {
+      image: 'cases/TB/TB_Cover.jpg',
+      link: 'case-tbank.html',
+      title: 'Мерч Т-Банка',
+      description: 'Мерч для дизайн-команды Т-Банка на конкурсе «Тираж’26»: пиксельный язык от сувенирки до одежды.'
     }
   ];
 
@@ -1001,6 +1013,39 @@ void main() {
 
   onMovementChange(false); // показать подписи сразу
   window.addEventListener('resize', () => sketch.resize());
+
+  // ================================================================
+  // Переключатель вида: 3D-сфера / обычные карточки. Появляется
+  // только сейчас — когда сфера успешно запустилась. В режиме
+  // карточек рендер сферы ставится на паузу.
+  // ================================================================
+  let userView = 'menu';
+  const toggle = section.querySelector('.casesToggle');
+  if (toggle) {
+    toggle.classList.add('casesToggle--on');
+    const toggleBtns = toggle.querySelectorAll('.casesToggle__btn');
+    const setView = (view) => {
+      if (view === userView) return;
+      userView = view;
+      const isMenu = view === 'menu';
+      section.classList.toggle('cases--menu', isMenu);
+      toggleBtns.forEach((b) => {
+        const active = b.dataset.view === view;
+        b.classList.toggle('is-active', active);
+        b.setAttribute('aria-pressed', active ? 'true' : 'false');
+      });
+      if (isMenu) {
+        // канвас был display:none — пересчитываем размер и оживляем
+        sketch.resize();
+        sketch.resume();
+      } else {
+        sketch.pause();
+      }
+    };
+    toggleBtns.forEach((b) =>
+      b.addEventListener('click', () => setView(b.dataset.view))
+    );
+  }
   // ResizeObserver ловит смену размеров панели без ресайза окна
   // (вход/выход из полноэкранного режима)
   if ('ResizeObserver' in window) {
@@ -1061,7 +1106,8 @@ void main() {
     const visibilityObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
+          // в режиме карточек сферу не оживляем — она скрыта
+          if (entry.isIntersecting && userView === 'menu') {
             sketch.resume();
           } else {
             sketch.pause();

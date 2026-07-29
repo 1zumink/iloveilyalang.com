@@ -67,7 +67,6 @@
     <section class="achievements" id="achievements">
       <h2 class="section__title">Достижения</h2>
       <ul class="achievements__list">
-        <!-- ЗАГЛУШКА: подставь реальные конкурсы, роли и годы -->
         <li class="achievement">
           <span class="achievement__badge" aria-hidden="true">
             <svg
@@ -91,13 +90,14 @@
             </svg>
           </span>
           <div class="achievement__info">
-            <span class="achievement__period">2025</span>
+            <span class="achievement__period">2024</span>
             <h3 class="achievement__name">
-              Победитель студенческого конкурса дизайна — айдентика СПАРК
+              Шорт-лист топ-5 команд на креатоне «Дизайн-цех», спец-трек
+              «Киностудия Горького»
             </h3>
-            <!-- ЗАГЛУШКА: поправь роль под себя (участник / арт-директор / лид) -->
-            <p class="achievement__meta">В команде · арт-директор</p>
+            <p class="achievement__meta">В команде · дизайнер мерча</p>
           </div>
+          <!-- ЗАГЛУШКА: подставь ссылку на кейс -->
           <a
             class="btn btn--ghost achievement__btn"
             href="case-spark-identity.html"
@@ -130,10 +130,11 @@
           <div class="achievement__info">
             <span class="achievement__period">2025</span>
             <h3 class="achievement__name">
-              Финалист хакатона по продуктовому дизайну — концепт Inkspace
+              Победитель на креатоне «Дизайн-цех», трек «Долина Ростеха»
             </h3>
-            <p class="achievement__meta">Соло</p>
+            <p class="achievement__meta">В команде · арт-директор</p>
           </div>
+          <!-- ЗАГЛУШКА: подставь ссылку на кейс -->
           <a class="btn btn--ghost achievement__btn" href="case-inkspace.html">
             Смотреть кейс
           </a>
@@ -161,16 +162,52 @@
             </svg>
           </span>
           <div class="achievement__info">
-            <span class="achievement__period">2024</span>
+            <span class="achievement__period">2025</span>
             <h3 class="achievement__name">
-              Лучший проект модуля — многостраничный сайт СПАРК
+              Победитель на креатоне «Дизайн-цех», трек «Московский зоопарк»
             </h3>
-            <p class="achievement__meta">Соло</p>
+            <p class="achievement__meta">В команде · арт-директор</p>
           </div>
+          <!-- ЗАГЛУШКА: подставь ссылку на кейс -->
           <a
             class="btn btn--ghost achievement__btn"
             href="case-spark-website.html"
           >
+            Смотреть кейс
+          </a>
+        </li>
+        <li class="achievement">
+          <span class="achievement__badge" aria-hidden="true">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+              <path d="M4 22h16" />
+              <path
+                d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"
+              />
+              <path
+                d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"
+              />
+              <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
+            </svg>
+          </span>
+          <div class="achievement__info">
+            <span class="achievement__period">2025</span>
+            <h3 class="achievement__name">
+              Победитель конкурса айдентики фестиваля «Нижний Новгород —
+              столица российского дизайна»
+            </h3>
+            <p class="achievement__meta">В команде · дизайнер мерча</p>
+          </div>
+          <!-- ЗАГЛУШКА: подставь ссылку на кейс -->
+          <a class="btn btn--ghost achievement__btn" href="#">
             Смотреть кейс
           </a>
         </li>
@@ -221,7 +258,55 @@
 
     <!-- ===================== КЕЙСЫ ===================== -->
     <section class="cases" id="cases" data-theme="pink">
-      <h2 class="section__title">Кейсы</h2>
+      <div class="cases__head">
+        <h2 class="section__title">Кейсы</h2>
+        <!-- Переключатель вида: 3D-сфера / карточки. Показывается из
+             infiniteMenu.js только когда 3D-режим реально доступен. -->
+        <div class="casesToggle" role="group" aria-label="Вид кейсов">
+          <button
+            class="casesToggle__btn is-active"
+            type="button"
+            data-view="menu"
+            aria-label="3D-сфера"
+            aria-pressed="true"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="9" />
+              <path d="M3 12h18" />
+              <path d="M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18" />
+            </svg>
+          </button>
+          <button
+            class="casesToggle__btn"
+            type="button"
+            data-view="grid"
+            aria-label="Карточки"
+            aria-pressed="false"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="3" y="4" width="5" height="16" rx="1" />
+              <rect x="9.5" y="4" width="5" height="16" rx="1" />
+              <rect x="16" y="4" width="5" height="16" rx="1" />
+            </svg>
+          </button>
+        </div>
+      </div>
 
       <!-- 3D-меню кейсов: крутящаяся сфера из обложек (javascripts/infiniteMenu.js).
            Если WebGL2 недоступен или включён prefers-reduced-motion,
@@ -289,10 +374,6 @@
           />
           <span class="caseCard__tag">Брендинг</span>
           <h3 class="caseCard__title">СПАРК — айдентика</h3>
-          <p class="caseCard__desc">
-            Платформа бренда для ивент-сервиса: исследование, три концепции и
-            система на 30+ носителях.
-          </p>
         </a>
 
         <a class="caseCard" href="case-spark-website.html">
@@ -304,10 +385,6 @@
           />
           <span class="caseCard__tag">Веб-дизайн</span>
           <h3 class="caseCard__title">СПАРК — сайт</h3>
-          <p class="caseCard__desc">
-            Многостраничник ивент-менеджера: от карты сайта и вайрфреймов до
-            свёрстанных страниц.
-          </p>
         </a>
 
         <a class="caseCard" href="case-inkspace.html">
@@ -319,10 +396,28 @@
           />
           <span class="caseCard__tag">Продукт / UX</span>
           <h3 class="caseCard__title">Inkspace</h3>
-          <p class="caseCard__desc">
-            Приложение-соцсеть для тату-комьюнити: весь путь от идеи эскиза до
-            оплаты — в одном месте.
-          </p>
+        </a>
+
+        <a class="caseCard" href="case-nizhniy.html">
+          <img
+            class="caseCard__cover"
+            src="cases/Nizhniy/nizhniy_cover.jpg"
+            alt="Нижний Новгород — золотая столица российского дизайна"
+            loading="lazy"
+          />
+          <span class="caseCard__tag">Айдентика и брендинг</span>
+          <h3 class="caseCard__title">Нижний Новгород</h3>
+        </a>
+
+        <a class="caseCard" href="case-tbank.html">
+          <img
+            class="caseCard__cover"
+            src="cases/TB/TB_Cover.jpg"
+            alt="Мерч для дизайнеров Т-Банка"
+            loading="lazy"
+          />
+          <span class="caseCard__tag">Мерч</span>
+          <h3 class="caseCard__title">Мерч для дизайнеров Т-Банка</h3>
         </a>
       </div>
     </section>

@@ -293,50 +293,113 @@ body {
   color: #444;
 }
 
-/* ===================== КЕЙСЫ: карточки на главной ===================== */
+/* ===================== КЕЙСЫ: карточки на главной =====================
+   Крупные обложки без подписей снизу; ярлык (сверху слева) и название
+   (снизу слева) — оверлеи поверх обложки, проявляются при наведении
+   (сам ховер — в animation.css; на таче видны всегда). */
 .cases__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2vw;
-  max-width: 56vw; /* компактная сетка по центру */
+  max-width: 74vw; /* крупнее прежнего — обложки больше */
   margin: 0 auto;
 }
 .caseCard {
+  position: relative;
   display: block;
-  color: var(--ink);
+  overflow: hidden;
+  border-radius: 1.2vw;
+  color: #fff;
   text-decoration: none;
 }
 .caseCard__cover {
   width: 100%;
   aspect-ratio: 124 / 175; /* единая пропорция обложек (1240×1750) */
   object-fit: cover;
-  border-radius: 1.2vw;
   display: block;
-  transition: transform 0.3s ease;
+  transition: transform 0.4s ease;
+}
+/* затемнение снизу — чтобы белое название читалось на любой обложке */
+.caseCard::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 45%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.72), transparent);
+  pointer-events: none;
 }
 .caseCard__tag {
-  display: inline-block;
-  margin-top: 1vw;
-  padding: 0.3vw 0.8vw;
+  position: absolute;
+  top: 1vw;
+  left: 1vw;
+  z-index: 2;
+  padding: 0.4vw 0.9vw;
   border-radius: 2vw;
   background: var(--accent);
   color: #fff;
   font-weight: 500;
-  font-size: 0.8vw;
+  font-size: 0.85vw;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 .caseCard__title {
-  margin-top: 0.7vw;
+  position: absolute;
+  left: 1.3vw;
+  right: 1.3vw;
+  bottom: 1.1vw;
+  z-index: 2;
+  color: #fff;
   font-weight: 500;
-  font-size: 1.6vw;
-  line-height: 1.15;
+  font-size: 1.7vw;
+  line-height: 1.1;
 }
-.caseCard__desc {
-  margin-top: 0.5vw;
-  font-size: 1vw;
-  line-height: 1.45;
-  color: #444;
+
+/* ===================== КЕЙСЫ: заголовок + переключатель =====================
+   Заголовок «Кейсы» и справа от него сегментированный переключатель
+   вида (сфера / карточки). Переключатель показывает infiniteMenu.js
+   классом .casesToggle--on, только когда 3D-режим доступен. */
+.cases__head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.8vw;
+  margin-bottom: 4vw;
+}
+.cases__head .section__title {
+  margin-bottom: 0;
+}
+.casesToggle {
+  display: none; /* показывается из JS, если доступна сфера */
+  gap: 0.4vw;
+  padding: 0.4vw;
+  border-radius: 3vw;
+  box-shadow: inset 0 0 0 0.14vw #e3e3e3;
+}
+.casesToggle--on {
+  display: inline-flex;
+}
+.casesToggle__btn {
+  width: 3vw;
+  height: 3vw;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: #9a9a9a;
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+.casesToggle__btn svg {
+  width: 1.5vw;
+  height: 1.5vw;
+}
+.casesToggle__btn.is-active {
+  background: var(--accent);
+  color: #fff;
 }
 
 /* ===================== КЕЙСЫ: 3D-меню-сфера =====================
@@ -366,11 +429,18 @@ body {
 #casesMenuCanvas:active {
   cursor: grabbing;
 }
+/* Подписи получают полупрозрачную тёмную подложку с блюром — иначе
+   на фоне соседних обложек сферы текст становится нечитаемым */
 .casesMenu__title {
   position: absolute;
-  left: 3.5vw;
+  left: 2.8vw;
   top: 50%;
-  max-width: 22vw;
+  max-width: 24vw;
+  padding: 0.7vw 1.1vw;
+  border-radius: 0.8vw;
+  background: rgba(18, 18, 18, 0.5);
+  -webkit-backdrop-filter: blur(0.6vw);
+  backdrop-filter: blur(0.6vw);
   color: #fff;
   font-weight: 500;
   font-size: 3vw;
@@ -379,10 +449,15 @@ body {
 }
 .casesMenu__desc {
   position: absolute;
-  right: 3.5vw;
+  right: 2.8vw;
   top: 50%;
-  max-width: 17vw;
-  color: rgba(255, 255, 255, 0.75);
+  max-width: 19vw;
+  padding: 0.7vw 1.1vw;
+  border-radius: 0.8vw;
+  background: rgba(18, 18, 18, 0.5);
+  -webkit-backdrop-filter: blur(0.6vw);
+  backdrop-filter: blur(0.6vw);
+  color: rgba(255, 255, 255, 0.85);
   font-size: 1.15vw;
   line-height: 1.5;
   text-align: right;
@@ -506,14 +581,16 @@ body {
   gap: 2.2vw 3vw;
   margin-top: 3vw;
 }
+/* Лейблы СОВА (Ситуация/Задача/Действия/Результат) — крупнее текста
+   и жирнее (Styrene A Bold 700) */
 .case__label {
   display: block;
-  font-weight: 500;
-  font-size: 1vw;
-  letter-spacing: 0.14em;
+  font-weight: 700;
+  font-size: 1.7vw;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 0.7vw;
+  margin-bottom: 0.9vw;
 }
 .caseDetail__block p {
   font-size: 1.25vw;

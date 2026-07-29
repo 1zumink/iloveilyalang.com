@@ -300,6 +300,92 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ================================================================
+  // Слайдеры на страницах кейсов: стрелки по бокам и точки-индикатор
+  // снизу (сколько всего слайдов и текущий). Обёртка и контролы
+  // добавляются к любому .caseStory__slider из разметки.
+  // ================================================================
+  document.querySelectorAll('.caseStory__slider').forEach((slider) => {
+    const slides = [...slider.children];
+    if (slides.length < 2) return;
+
+    const wrap = document.createElement('div');
+    wrap.className = 'caseStory__sliderWrap';
+    slider.parentNode.insertBefore(wrap, slider);
+    wrap.appendChild(slider);
+
+    const CHEVRON = {
+      prev: '<polyline points="15 18 9 12 15 6" />',
+      next: '<polyline points="9 18 15 12 9 6" />'
+    };
+    const makeBtn = (dir, label) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'caseStory__sliderBtn caseStory__sliderBtn--' + dir;
+      b.setAttribute('aria-label', label);
+      b.innerHTML =
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+        'stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" ' +
+        'aria-hidden="true">' +
+        CHEVRON[dir] +
+        '</svg>';
+      wrap.appendChild(b);
+      return b;
+    };
+    const prev = makeBtn('prev', 'Предыдущий слайд');
+    const next = makeBtn('next', 'Следующий слайд');
+
+    const dotsBox = document.createElement('div');
+    dotsBox.className = 'caseStory__sliderDots';
+    const dots = slides.map((_, i) => {
+      const d = document.createElement('button');
+      d.type = 'button';
+      d.className = 'caseStory__dot';
+      d.setAttribute('aria-label', 'Слайд ' + (i + 1));
+      d.addEventListener('click', () =>
+        slider.scrollTo({ left: slider.clientWidth * i, behavior: 'smooth' })
+      );
+      dotsBox.appendChild(d);
+      return d;
+    });
+    wrap.appendChild(dotsBox);
+
+    const last = slides.length - 1;
+    const activeIndex = () =>
+      Math.max(0, Math.min(last, Math.round(slider.scrollLeft / slider.clientWidth)));
+    const goTo = (i) =>
+      slider.scrollTo({ left: slider.clientWidth * i, behavior: 'smooth' });
+    const sync = () => {
+      const idx = activeIndex();
+      dots.forEach((d, i) => d.classList.toggle('is-active', i === idx));
+    };
+    // на краю слайдер перематывается по кругу: вперёд с последнего →
+    // на первый, назад с первого → на последний
+    prev.addEventListener('click', () => {
+      const idx = activeIndex();
+      goTo(idx <= 0 ? last : idx - 1);
+    });
+    next.addEventListener('click', () => {
+      const idx = activeIndex();
+      goTo(idx >= last ? 0 : idx + 1);
+    });
+    let sliderRaf = false;
+    slider.addEventListener(
+      'scroll',
+      () => {
+        if (sliderRaf) return;
+        sliderRaf = true;
+        requestAnimationFrame(() => {
+          sliderRaf = false;
+          sync();
+        });
+      },
+      { passive: true }
+    );
+    window.addEventListener('resize', sync);
+    sync();
+  });
+
+  // ================================================================
   // Кастомный курсор: точка как в таймлайне резюме вместо системной
   // стрелки. Цвет следует за темой (как лента за курсором), над
   // интерактивными элементами точка слегка растёт. Только для мыши.
@@ -391,9 +477,25 @@ document.addEventListener('DOMContentLoaded', () => {
       pink: [18, 18, 18], // чёрный на розовом
       dark: [255, 255, 255] // белый на тёмном
     };
+    // на страницах кейсов-историй хвост красится в акцент кейса
+    // (--case-head: Нижний — жёлтый, Т-Банк — фиолетовый)
+    const hexToRgb = (hex) => {
+      hex = hex.trim().replace('#', '');
+      if (hex.length === 3) hex = hex.split('').map((c) => c + c).join('');
+      const n = parseInt(hex, 16);
+      return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+    };
+    let CASE_RGB = null;
+    if (document.body.classList.contains('caseStory-page')) {
+      const v = getComputedStyle(document.body)
+        .getPropertyValue('--case-head')
+        .trim();
+      if (v) CASE_RGB = hexToRgb(v);
+    }
     // курсор над тёмной панелью кейсов — хвост белеет, как и точка
     let overDarkPanel = false;
     const trailTarget = () => {
+      if (CASE_RGB) return CASE_RGB;
       if (overDarkPanel) return TRAIL_RGB.dark;
       if (document.body.classList.contains('theme-pink')) {
         return TRAIL_RGB.pink;

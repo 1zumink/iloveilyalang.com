@@ -95,6 +95,18 @@
     width: 0.8vw;
   }
 
+  /* --- Кастомного курсора на мобилке нет: прячем точку и трейл
+     и возвращаем системный курсор (на случай гибридных устройств,
+     которые репортят pointer: fine) --- */
+  .cursorDot,
+  .cursorTrail {
+    display: none !important;
+  }
+  body.custom-cursor,
+  body.custom-cursor * {
+    cursor: auto !important;
+  }
+
   /* --- Кастомный курсор: если к узкому экрану подключена мышь --- */
   .cursorDot {
     width: 2.133vw;
@@ -218,6 +230,25 @@
     font-size: 4.2vw;
   }
 
+  /* --- Заголовок кейсов + переключатель --- */
+  .cases__head {
+    gap: 3.733vw;
+    margin-bottom: 6.4vw;
+  }
+  .casesToggle {
+    gap: 1.067vw;
+    padding: 1.067vw;
+    border-radius: 8vw;
+  }
+  .casesToggle__btn {
+    width: 8vw;
+    height: 8vw;
+  }
+  .casesToggle__btn svg {
+    width: 4.267vw;
+    height: 4.267vw;
+  }
+
   /* --- 3D-меню кейсов: почти квадратная панель, подпись сверху --- */
   .casesMenu {
     height: 120vw;
@@ -230,6 +261,8 @@
     right: 5.333vw;
     top: 6.4vw;
     max-width: none;
+    padding: 2.133vw 3.2vw;
+    border-radius: 2.667vw;
     font-size: 5.867vw;
   }
   .casesMenu__title.active {
@@ -267,28 +300,36 @@
     height: 5.333vw;
   }
 
-  /* --- Кейсы: карточки по две в ряд --- */
+  /* --- Кейсы: карточки по две в ряд, ярлык и название видны всегда
+     (ховера на таче нет), позиционированы поверх обложки --- */
   .cases__grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 6.4vw 3.733vw;
     max-width: 100%;
   }
-  .caseCard__cover {
+  .caseCard {
     border-radius: 3.2vw;
   }
+  /* на таче ховера нет — ярлык и название всегда видны (перебиваем
+     скрытие из hover-медиазапроса) */
+  .caseCard__tag,
+  .caseCard__title,
+  .caseCard::after {
+    opacity: 1;
+    transform: none;
+  }
   .caseCard__tag {
-    margin-top: 2.667vw;
-    padding: 0.8vw 2.667vw;
+    top: 2.667vw;
+    left: 2.667vw;
+    padding: 1.067vw 2.667vw;
     border-radius: 5.333vw;
     font-size: 2.6vw;
   }
   .caseCard__title {
-    margin-top: 1.6vw;
+    left: 3.2vw;
+    right: 3.2vw;
+    bottom: 3.2vw;
     font-size: 4.6vw;
-  }
-  .caseCard__desc {
-    margin-top: 1.067vw;
-    font-size: 3.2vw;
   }
 
   /* --- Цены --- */
@@ -426,8 +467,8 @@
     margin-top: 7.467vw;
   }
   .case__label {
-    font-size: 3.4vw;
-    margin-bottom: 1.6vw;
+    font-size: 5.2vw;
+    margin-bottom: 2.4vw;
   }
   .caseDetail__block p {
     font-size: 4.3vw;

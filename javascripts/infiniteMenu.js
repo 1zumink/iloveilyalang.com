@@ -929,24 +929,6 @@ void main() {
   // ================================================================
   const items = [
     {
-      image: 'images/cases/merch_cover.jpg',
-      link: 'case-spark-identity.html',
-      title: 'СПАРК — айдентика',
-      description: 'Платформа бренда для ивент-сервиса: исследование, три концепции и система на 30+ носителях.'
-    },
-    {
-      image: 'images/cases/web_cover.jpg',
-      link: 'case-spark-website.html',
-      title: 'СПАРК — сайт',
-      description: 'Многостраничник ивент-менеджера: от карты сайта и вайрфреймов до свёрстанных страниц.'
-    },
-    {
-      image: 'images/cases/ink_cover.jpg',
-      link: 'case-inkspace.html',
-      title: 'Inkspace',
-      description: 'Приложение-соцсеть для тату-комьюнити: весь путь от идеи эскиза до оплаты — в одном месте.'
-    },
-    {
       image: 'cases/Nizhniy/nizhniy_cover.jpg',
       link: 'case-nizhniy.html',
       title: 'Нижний Новгород',

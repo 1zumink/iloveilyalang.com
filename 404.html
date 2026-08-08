@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 — Илья Ланг</title>
+    <link rel="stylesheet" href="stylesheets/reset.css" />
+    <link rel="stylesheet" href="stylesheets/fonts.css" />
+    <link rel="icon" href="images/iconSite.png" type="images/png" />
+    <style>
+      /* Экран 404 — фон с водяным знаком «404», поверх текст и кнопка.
+         Никаких px: размеры в vw/vh, картинка на весь вьюпорт (cover). */
+      html,
+      body {
+        height: 100%;
+      }
+      .notFound {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2vw;
+        min-height: 100vh;
+        padding: 0 8vw;
+        text-align: center;
+        font-family: 'Styrene A';
+        color: #fff;
+        background: #ff2298 url('images/404Computer.png') center / cover no-repeat;
+      }
+      .notFound__text {
+        font-weight: 500;
+        font-size: 3vw;
+        line-height: 1.1;
+      }
+      .notFound__btn {
+        display: inline-block;
+        padding: 1.1vw 3vw;
+        border-radius: 5vw;
+        background: #fff;
+        color: #ff2298;
+        font-weight: 500;
+        font-size: 2vw;
+        text-decoration: none;
+        transition: transform 0.2s, opacity 0.2s;
+      }
+      @media (hover: hover) and (pointer: fine) {
+        .notFound__btn:hover {
+          transform: translateY(-0.3vw);
+          opacity: 0.92;
+        }
+      }
+      /* Мобильный адаптив — свой фон (375 макет) */
+      @media (max-width: 700px) {
+        .notFound {
+          gap: 4vw;
+          padding: 0 5vw;
+          background-image: url('images/404Mobile.png');
+        }
+        .notFound__text {
+          font-size: 6.4vw;
+        }
+        .notFound__btn {
+          padding: 3vw 7vw;
+          border-radius: 12vw;
+          font-size: 5vw;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="notFound">
+      <p class="notFound__text">Здесь пока ничего нет</p>
+      <a class="notFound__btn" href="index.html">На главную</a>
+    </main>
+  </body>
+</html>

@@ -322,6 +322,285 @@ body.caseStory-page .footer {
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
+/* ===================== БЛОКИ ИЗ ТАБЛИЦЫ КЕЙСОВ =====================
+   Типы блоков из листа «Инструкция» в кейсы_портфолио.xlsx: подзаголовок,
+   акцентный текст, два столбца, плашка, N в ряд, карточки, картинка +
+   текст, таблица, палитра, шрифт. Первым их использует кейс
+   «Рос.техно.сфера.». */
+
+/* Вторая плашка рядом с тегом — достижение кейса */
+.caseStory__award {
+  display: inline-block;
+  margin-left: 0.6vw;
+  padding: 0.33vw 0.93vw;
+  border: 0.07vw solid var(--case-head);
+  border-radius: 2vw;
+  color: var(--case-head);
+  font-weight: 500;
+  font-size: 0.9vw;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Текстовый блок колонкой ~860px макета */
+.caseStory__text--column p {
+  max-width: 59.72vw;
+}
+
+.caseStory__sub {
+  padding: 1vw 10vw 2vw;
+  font-size: 2.222vw;
+  line-height: 1.3;
+}
+
+.caseStory__accent {
+  padding: 5vw 10vw;
+  font-weight: 700;
+  font-size: 3.611vw;
+  line-height: 1.15;
+  color: var(--case-head);
+}
+
+/* Два столбца: заголовок + текст рядом */
+.caseStory__cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4vw;
+  padding: 2vw 10vw;
+}
+.caseStory__col-title {
+  margin-bottom: 0.8vw;
+  font-weight: 500;
+  font-size: 1.7vw;
+  color: var(--case-head);
+}
+.caseStory__col p {
+  font-size: 1.4vw;
+  line-height: 1.6;
+}
+
+/* Плашка: цветная полоса на всю ширину, текст по центру.
+   Цвета — инлайн-переменными --strip-bg / --strip-text. */
+.caseStory__strip {
+  margin: 4vw 0;
+  padding: 5vw 10vw;
+  background: var(--strip-bg);
+  color: var(--strip-text);
+  text-align: center;
+}
+.caseStory__strip-label {
+  display: block;
+  margin-bottom: 1vw;
+  font-size: 1vw;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+.caseStory__strip-text {
+  font-weight: 500;
+  font-size: 3.611vw;
+  line-height: 1.15;
+}
+
+/* 2/3 в ряд без зазоров: одинаковая высота, ширина по пропорциям
+   файла — flex-grow = width / height задан инлайном на каждой фотке */
+.caseStory__row {
+  display: flex;
+  align-items: flex-start;
+}
+.caseStory__row img {
+  display: block;
+  flex-basis: 0;
+  min-width: 0;
+  width: 0;
+  height: auto;
+}
+
+/* 2 в ряд (кейс Ростеха): обе фотки ровно по половине экрана, стык
+   посередине, одинаковый размер — общая пропорция --pair-ratio (среднее
+   пропорций двух файлов, инлайн на блоке), лишнее срезает object-fit */
+.caseStory__pair--even img {
+  height: auto;
+  aspect-ratio: var(--pair-ratio);
+}
+
+/* Карточки: 3 в ряд, круглая картинка, заголовок и список цветом карточки */
+.caseStory__cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5vw;
+  padding: 2vw 10vw 4vw;
+}
+.caseStory__card {
+  padding: 2.5vw;
+  border: 0.1vw solid var(--card-color);
+  border-radius: 1.5vw;
+  color: var(--card-color);
+}
+.caseStory__card-img {
+  display: block;
+  width: 11.11vw;
+  height: auto;
+  border-radius: 50%;
+}
+.caseStory__card-title {
+  margin: 1.5vw 0 1vw;
+  font-weight: 500;
+  font-size: 1.94vw;
+}
+.caseStory__card-list {
+  padding-left: 1.2vw;
+  list-style: disc;
+  font-size: 1.2vw;
+  line-height: 1.5;
+}
+.caseStory__card-list li {
+  margin-bottom: 0.5vw;
+}
+
+/* Картинка слева, текст справа */
+.caseStory__media {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 5vw;
+  align-items: center;
+  padding: 4vw 10vw;
+}
+.caseStory__media-img {
+  display: block;
+  width: 24vw;
+  height: auto;
+}
+.caseStory__media-title {
+  margin-bottom: 1.2vw;
+  font-weight: 500;
+  font-size: 2.2vw;
+  color: var(--case-head);
+}
+.caseStory__media-list {
+  padding-left: 1.6vw;
+  list-style: decimal;
+  font-size: 1.4vw;
+  line-height: 1.6;
+}
+.caseStory__media-list li {
+  margin-bottom: 0.6vw;
+}
+
+/* Таблица: первая строка — шапка цветом заголовков */
+.caseStory__tableWrap {
+  padding: 2vw 10vw 4vw;
+}
+.caseStory__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.caseStory__table th {
+  padding: 1vw 1.5vw 1vw 0;
+  border-bottom: 0.14vw solid var(--case-head);
+  color: var(--case-head);
+  font-weight: 700;
+  font-size: 1.1vw;
+  letter-spacing: 0.06em;
+  text-align: left;
+  text-transform: uppercase;
+}
+.caseStory__table td {
+  padding: 1.4vw 1.5vw 1.4vw 0;
+  border-bottom: 0.07vw solid
+    color-mix(in srgb, var(--case-text) 18%, transparent);
+  font-size: 1.3vw;
+  line-height: 1.5;
+  vertical-align: top;
+}
+.caseStory__table td:first-child {
+  width: 18%;
+  font-weight: 500;
+}
+
+/* Палитра: круг цвета, HEX, CMYK · Pantone, значение */
+.caseStory__palette {
+  padding: 2vw 10vw 4vw;
+}
+.caseStory__palette-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3vw 2.5vw;
+  padding: 0;
+  list-style: none;
+}
+.caseStory__swatch-dot,
+.caseStory__palette-chip i {
+  display: block;
+  border-radius: 50%;
+  /* тонкая обводка, чтобы белый круг не пропадал на белом фоне */
+  box-shadow: inset 0 0 0 0.07vw
+    color-mix(in srgb, var(--case-text) 20%, transparent);
+}
+.caseStory__swatch-dot {
+  width: 7vw;
+  height: 7vw;
+}
+.caseStory__swatch-hex {
+  display: block;
+  margin-top: 1.2vw;
+  font-weight: 500;
+  font-size: 1.5vw;
+}
+.caseStory__swatch-codes {
+  display: block;
+  margin: 0.3vw 0 0.6vw;
+  font-size: 1vw;
+  opacity: 0.6;
+}
+.caseStory__swatch-text {
+  font-size: 1.2vw;
+  line-height: 1.45;
+}
+.caseStory__palette-extra {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1vw 2vw;
+  margin-top: 3vw;
+}
+.caseStory__palette-extra-label {
+  font-size: 1vw;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+.caseStory__palette-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6vw;
+  font-size: 1.1vw;
+}
+.caseStory__palette-chip i {
+  width: 1.8vw;
+  height: 1.8vw;
+}
+
+/* Шрифт: название крупно, описание, строка алфавита */
+.caseStory__font {
+  padding: 2vw 10vw 4vw;
+}
+.caseStory__font-name {
+  font-size: 6.94vw;
+  line-height: 1;
+  color: var(--case-head);
+}
+.caseStory__font-desc {
+  margin: 1.2vw 0 2vw;
+  font-size: 1.4vw;
+  line-height: 1.5;
+}
+.caseStory__font-abc {
+  font-size: 2.2vw;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+
 /* ===================== МОБИЛЬНАЯ ВЕРСИЯ ===================== */
 @media screen and (max-width: 700px) {
   /* Выезжающее меню на мобилке — панель под цвет кейса, иначе ссылки
@@ -443,5 +722,197 @@ body.caseStory-page .footer {
     padding: 3.2vw 6.4vw;
     border-radius: 6.933vw;
     font-size: 4.4vw;
+  }
+
+  /* --- блоки из таблицы кейсов --- */
+  .caseStory__award {
+    margin: 1.6vw 0 0;
+    padding: 0.933vw 3.2vw;
+    border-width: 0.267vw;
+    border-radius: 5.333vw;
+    font-size: 3vw;
+  }
+  .caseStory__text--column p {
+    max-width: none;
+  }
+  .caseStory__sub {
+    padding: 2vw 5vw 4vw;
+    font-size: 5.6vw;
+  }
+  .caseStory__accent {
+    padding: 10vw 5vw;
+    font-size: 6.933vw;
+  }
+  .caseStory__cols {
+    grid-template-columns: 1fr;
+    gap: 6.4vw;
+    padding: 4vw 5vw;
+  }
+  .caseStory__col-title {
+    margin-bottom: 2.133vw;
+    font-size: 5.2vw;
+  }
+  .caseStory__col p {
+    font-size: 4.4vw;
+  }
+  .caseStory__strip {
+    margin: 8vw 0;
+    padding: 12vw 5vw;
+  }
+  .caseStory__strip-label {
+    margin-bottom: 2.667vw;
+    font-size: 3.2vw;
+  }
+  .caseStory__strip-text {
+    font-size: 6.933vw;
+  }
+  /* пары на мобилке — по одной, в родной пропорции файла */
+  .caseStory__pair--even img {
+    aspect-ratio: auto;
+  }
+  /* по одной фотке в ряд без отступов */
+  .caseStory__row {
+    flex-direction: column;
+  }
+  .caseStory__row img {
+    flex: none;
+    width: 100%;
+  }
+  .caseStory__cards {
+    grid-template-columns: 1fr;
+    gap: 5.333vw;
+    padding: 4vw 5vw 8vw;
+  }
+  .caseStory__card {
+    padding: 6.4vw;
+    border-width: 0.267vw;
+    border-radius: 4.267vw;
+  }
+  .caseStory__card-img {
+    width: 32vw;
+  }
+  .caseStory__card-title {
+    margin: 4vw 0 2.667vw;
+    font-size: 6.4vw;
+  }
+  .caseStory__card-list {
+    padding-left: 4.8vw;
+    font-size: 4.267vw;
+  }
+  .caseStory__card-list li {
+    margin-bottom: 1.6vw;
+  }
+  .caseStory__media {
+    grid-template-columns: 1fr;
+    gap: 6.4vw;
+    padding: 8vw 5vw;
+  }
+  .caseStory__media-img {
+    width: 70vw;
+    justify-self: center;
+  }
+  .caseStory__media-title {
+    margin-bottom: 3.2vw;
+    font-size: 6.4vw;
+  }
+  .caseStory__media-list {
+    padding-left: 5.333vw;
+    font-size: 4.4vw;
+  }
+  .caseStory__media-list li {
+    margin-bottom: 2.133vw;
+  }
+  /* таблица: каждая строка — карточка, первая ячейка жирным,
+     дальше «Шапка: значение» (подпись из data-label) */
+  .caseStory__tableWrap {
+    padding: 4vw 5vw 8vw;
+  }
+  .caseStory__table thead {
+    display: none;
+  }
+  .caseStory__table,
+  .caseStory__table tbody,
+  .caseStory__table tr,
+  .caseStory__table td {
+    display: block;
+  }
+  .caseStory__table tr {
+    margin-bottom: 3.2vw;
+    padding: 4.267vw;
+    border: 0.267vw solid
+      color-mix(in srgb, var(--case-text) 18%, transparent);
+    border-radius: 3.2vw;
+  }
+  .caseStory__table td {
+    padding: 0.8vw 0;
+    border: none;
+    font-size: 4.267vw;
+  }
+  .caseStory__table td:first-child {
+    width: auto;
+    margin-bottom: 1.6vw;
+    font-weight: 700;
+    font-size: 5.2vw;
+    color: var(--case-head);
+  }
+  .caseStory__table td:not(:first-child)::before {
+    content: attr(data-label) ': ';
+    font-weight: 500;
+  }
+  .caseStory__palette {
+    padding: 4vw 5vw 8vw;
+  }
+  .caseStory__palette-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6.4vw 4.267vw;
+  }
+  .caseStory__swatch-dot,
+  .caseStory__palette-chip i {
+    box-shadow: inset 0 0 0 0.267vw
+      color-mix(in srgb, var(--case-text) 20%, transparent);
+  }
+  .caseStory__swatch-dot {
+    width: 18vw;
+    height: 18vw;
+  }
+  .caseStory__swatch-hex {
+    margin-top: 3.2vw;
+    font-size: 4.8vw;
+  }
+  .caseStory__swatch-codes {
+    margin: 1.067vw 0 1.6vw;
+    font-size: 3.2vw;
+  }
+  .caseStory__swatch-text {
+    font-size: 3.733vw;
+  }
+  .caseStory__palette-extra {
+    gap: 2.667vw 4.267vw;
+    margin-top: 8vw;
+  }
+  .caseStory__palette-extra-label {
+    width: 100%;
+    font-size: 3.2vw;
+  }
+  .caseStory__palette-chip {
+    gap: 1.6vw;
+    font-size: 3.733vw;
+  }
+  .caseStory__palette-chip i {
+    width: 5.333vw;
+    height: 5.333vw;
+  }
+  .caseStory__font {
+    padding: 4vw 5vw 8vw;
+  }
+  .caseStory__font-name {
+    font-size: 16vw;
+  }
+  .caseStory__font-desc {
+    margin: 3.2vw 0 5.333vw;
+    font-size: 4.4vw;
+  }
+  .caseStory__font-abc {
+    font-size: 5.333vw;
   }
 }

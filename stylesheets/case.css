@@ -94,10 +94,11 @@ body.caseStory-page .footer {
   font-size: 1.9vw;
   line-height: 1.3;
 }
+/* роль, команда и инструменты — каждая на своей строке */
 .caseStory__meta {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.6vw 3vw;
+  flex-direction: column;
+  gap: 0.6vw;
   list-style: none;
   padding: 0;
   margin-top: 2vw;
@@ -378,6 +379,11 @@ body.caseStory-page .footer {
   font-size: 1.4vw;
   line-height: 1.6;
 }
+/* три столбца в ряд */
+.caseStory__cols--3 {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3vw;
+}
 
 /* Плашка: цветная полоса на всю ширину, текст по центру.
    Цвета — инлайн-переменными --strip-bg / --strip-text. */
@@ -416,7 +422,14 @@ body.caseStory-page .footer {
   height: auto;
 }
 
-/* 2 в ряд (кейс Ростеха): обе фотки ровно по половине экрана, стык
+/* текст сразу после картиночного блока не прилипает к фото
+   (слайдер к этому моменту уже обёрнут в .caseStory__sliderWrap) */
+:is(.caseStory__img, .caseStory__pair, .caseStory__row, .caseStory__sliderWrap)
+  + :is(.caseStory__sub, .caseStory__cols, .caseStory__text) {
+  padding-top: 4vw;
+}
+
+/* 2 в ряд пополам: обе фотки ровно по половине экрана, стык
    посередине, одинаковый размер — общая пропорция --pair-ratio (среднее
    пропорций двух файлов, инлайн на блоке), лишнее срезает object-fit */
 .caseStory__pair--even img {
@@ -485,6 +498,11 @@ body.caseStory-page .footer {
 }
 .caseStory__media-list li {
   margin-bottom: 0.6vw;
+}
+/* обычный текст вместо нумерованного списка */
+.caseStory__media-text {
+  font-size: 1.4vw;
+  line-height: 1.6;
 }
 
 /* Таблица: первая строка — шапка цветом заголовков */
@@ -579,6 +597,19 @@ body.caseStory-page .footer {
 .caseStory__palette-chip i {
   width: 1.8vw;
   height: 1.8vw;
+}
+/* палитра только из HEX (без CMYK/Pantone/значений) — плотнее, 6 в ряд */
+.caseStory__palette--compact .caseStory__palette-grid {
+  grid-template-columns: repeat(6, 1fr);
+  gap: 2.5vw 2vw;
+}
+.caseStory__palette--compact .caseStory__swatch-dot {
+  width: 5.5vw;
+  height: 5.5vw;
+}
+.caseStory__palette--compact .caseStory__swatch-hex {
+  margin-top: 0.9vw;
+  font-size: 1.2vw;
 }
 
 /* Шрифт: название крупно, описание, строка алфавита */
@@ -755,6 +786,10 @@ body.caseStory-page .footer {
   .caseStory__col p {
     font-size: 4.4vw;
   }
+  .caseStory__cols--3 {
+    grid-template-columns: 1fr;
+    gap: 6.4vw;
+  }
   .caseStory__strip {
     margin: 8vw 0;
     padding: 12vw 5vw;
@@ -765,6 +800,10 @@ body.caseStory-page .footer {
   }
   .caseStory__strip-text {
     font-size: 6.933vw;
+  }
+  :is(.caseStory__img, .caseStory__pair, .caseStory__row, .caseStory__sliderWrap)
+    + :is(.caseStory__sub, .caseStory__cols, .caseStory__text) {
+    padding-top: 8vw;
   }
   /* пары на мобилке — по одной, в родной пропорции файла */
   .caseStory__pair--even img {
@@ -821,6 +860,9 @@ body.caseStory-page .footer {
   }
   .caseStory__media-list li {
     margin-bottom: 2.133vw;
+  }
+  .caseStory__media-text {
+    font-size: 4.4vw;
   }
   /* таблица: каждая строка — карточка, первая ячейка жирным,
      дальше «Шапка: значение» (подпись из data-label) */
@@ -901,6 +943,18 @@ body.caseStory-page .footer {
   .caseStory__palette-chip i {
     width: 5.333vw;
     height: 5.333vw;
+  }
+  .caseStory__palette--compact .caseStory__palette-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5.333vw 4.267vw;
+  }
+  .caseStory__palette--compact .caseStory__swatch-dot {
+    width: 16vw;
+    height: 16vw;
+  }
+  .caseStory__palette--compact .caseStory__swatch-hex {
+    margin-top: 2.133vw;
+    font-size: 3.733vw;
   }
   .caseStory__font {
     padding: 4vw 5vw 8vw;
